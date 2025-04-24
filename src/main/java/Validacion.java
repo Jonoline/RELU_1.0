@@ -5,7 +5,7 @@ public class Validacion {
     public static void main(String[] args){
 
     }
-    private static String leerUsuario(){
+    private static String leerMatricula(){
         System.out.println("ingrese su matrícula");
         return sc.nextLine();
     }
@@ -13,7 +13,7 @@ public class Validacion {
         System.out.println("ingrese su contraseña:");
         return sc.nextLine();
     }
-    private static Boolean validarUsuario(){
+    private static Boolean validarMatricula(){
         return true;
     }
     private static Boolean validarContrasena(){
