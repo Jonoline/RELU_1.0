@@ -4,8 +4,11 @@ public class reservasLogias {
     public static void main(String[] args) {
         llenarDias();
         llenarHoras();
+        llenarHorarios();
+        leerMatriz(horas);
     }
     public static void llenarDias(){
+        horas[0][0]="";
         horas[0][1]="lunes";
         horas[0][2]="martes";
         horas[0][3]="miercoles";
@@ -23,5 +26,22 @@ public class reservasLogias {
         horas[8][0]="16:50-17:50";
         horas[9][0]="18:00-19:00";
     }
-
+    public static void llenarHorarios(){
+        int filas = horas.length;
+        int columnas = horas[1].length;
+        for(int i = 1; i < filas ;i++){
+            for(int j = 1;j < columnas;j++){
+                horas[i][j] = "1";
+            }
+        }
+    }
+    public static void leerMatriz(String[][] resultado) {
+        System.out.println("\nMatriz Resultante:");
+        for (String[] fila : resultado) {
+            for (String val : fila) {
+                System.out.print(val + " ");
+            }
+            System.out.println();
+        }
+    }
 }
