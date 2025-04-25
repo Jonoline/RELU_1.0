@@ -5,9 +5,10 @@ public class Menu {
 
     public static void main(String[] args) {
         // TODO: Implementar la lógica inicial y llamada a los métodos necesarios.
+        System.out.println("Ejecutando reservasLogias...");
+        reservasLogias.main(new String[0]);
         menu();
-        sc.close();
-        System.out.println("Terminado ");
+
     }
 
     public static void menu() {
@@ -50,7 +51,7 @@ public class Menu {
     public static void ejecutarOpcion(int opcion) {
         switch (opcion) {
             case 1 -> {
-                System.out.println("Opcion 1 ");
+                reservasLogias.iniciarReserva();
             }
             case 2 -> System.out.println("Opcion 2 ");
             case 3 -> System.out.println("Opcion 3 ");
@@ -60,29 +61,7 @@ public class Menu {
         }
     }
 
-    private static int opcionDiaSeleccionada;
-
-    public void iniciarReserva() {
-        mostrarOpcionesDias();
-        int opcion = obtenerOpcionDia();
-        if (validarOpcionDia(opcion)) {
-            ejecutarOpcionDia(opcion);
-        } else {
-            System.out.println("⚠️ Día inválido, vuelve a intentarlo.");
-        }
-
-        // Aquí podrías seguir con horas:
-        mostrarOpcionesHoras();
-        int hora = obtenerOpcionHora();
-        if (validarOpcionHora(hora)) {
-            ejecutarOpcionHora(hora);
-        } else {
-            System.out.println("⚠️ Hora inválida, vuelve a intentarlo.");
-        }
-    }
-
-
-    public void mostrarOpcionesDias() {
+    public static void mostrarOpcionesDias() {
 
         /* Mostrar días que se pueden reservar Logias */
 
@@ -93,44 +72,11 @@ public class Menu {
         System.out.println("[4] Jueves");
         System.out.println("[5] Viernes");
     }
-    public int obtenerOpcionDia() {
 
-        /* Obtener opcion de Día del usuario */
-
-        System.out.print("Ingrese opción de día: ");
-        try {
-            return Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException e) {
-            return -1;
-        }
-    }
-
-    public boolean validarOpcionDia(int opcion) {
-
-        /* Validar la opcion de Día del usuario ingresada */
-
-        return opcion >= 1 && opcion <= 5;
-    }
-
-    public void ejecutarOpcionDia(int opcion) {
-
-        /* Ejecutar opción ingresada del día */
-
-        opcionDiaSeleccionada = opcion;
-        String dia = switch (opcion) {
-            case 1 -> "Lunes";
-            case 2 -> "Martes";
-            case 3 -> "Miércoles";
-            case 4 -> "Jueves";
-            case 5 -> "Viernes";
-            default -> "Desconocido";
-        };
-        System.out.println("✅ Día seleccionado: " + dia);
-    }
 
     // ----- Repetimos misma estructura para horas -----
 
-    public void mostrarOpcionesHoras() {
+    public static void mostrarOpcionesHoras() {
 
         /*Menu que muestra todas las horas posibles para reservar */
 
@@ -141,40 +87,5 @@ public class Menu {
         System.out.println("[4] 14:30 - 16:00");
         System.out.println("[5] 16:00 - 17:30");
         System.out.println("[6] 17:30 - 19:00");
-    }
-
-    public int obtenerOpcionHora() {
-
-            /* Aquí, después de vmostrar el menu, se la va a pedir
-               al usuario que ingrese una opción */
-
-        System.out.print("Ingrese opción de hora: ");
-        try {
-            return Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException e) {
-            return -1;
-        }
-    }
-
-    public boolean validarOpcionHora(int opcion) {
-        return opcion >= 1 && opcion <= 6;
-    }
-
-    public void ejecutarOpcionHora(int opcion) {
-
-            /* Aquí, después de validar la opción ingresada, se va a
-               mostrar la lista de opciones. */
-
-        String hora = switch (opcion) {
-            case 1 -> "08:30 - 10:00";
-            case 2 -> "10:00 - 11:30";
-            case 3 -> "11:30 - 13:00";
-            case 4 -> "14:30 - 16:00";
-            case 5 -> "16:00 - 17:30";
-            case 6 -> "17:30 - 19:00";
-            default -> "Desconocida";
-        };
-        System.out.println("✅ Hora seleccionada: " + hora);
-
     }
 }
