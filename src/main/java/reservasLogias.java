@@ -10,6 +10,8 @@ public class reservasLogias {
         llenarHorarios();
         seleccionarDiaHora();
         leerMatriz(horas);
+        eliminarReserva();
+        leerMatriz(horas);
     }
     public static void llenarDias(){
         horas[0][0]="";
@@ -102,5 +104,15 @@ public class reservasLogias {
             case 8 -> horas[8][0]="cambio";
             case 9 -> horas[9][0]="cambio";
         } */
+    }
+    private static void eliminarReserva() {
+        String matricula = Validacion.leerMatricula();
+        int dia = obtenerDia();
+        int hora = obtenerHora();
+        if (horas[dia][hora] == matricula) {
+            horas[dia][hora] = "1";
+        } else {
+            System.out.println("Esta reserva no es suya");
+        }
     }
 }
