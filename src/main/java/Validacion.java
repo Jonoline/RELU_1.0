@@ -3,7 +3,10 @@ import java.util.Scanner;
 public class Validacion {
     private static final Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    // Método que encapsula el flujo de inicio de sesión
+    public static boolean iniciarSesion() {
+        System.out.println("====== Iniciar Sesión ======");
+
         /* Aquí se está preguntando al usuario de ingresar matrícula */
         String matricula = leerMatricula();
 
@@ -11,39 +14,40 @@ public class Validacion {
         String contrasena = leerContrasena();
 
         /* Aquí se está "validando" la matrícula ingresada (simulado, siempre true) */
-        final Boolean a = validarMatricula(matricula);
+        boolean matriculaValida = validarMatricula(matricula);
 
         /* Aquí se está "validando" la contraseña ingresada (simulado, siempre true) */
-        final Boolean b = validarContrasena(contrasena);
+        boolean contrasenaValida = validarContrasena(contrasena);
 
-        /* Aquí se muestra un mensaje de confirmación de acceso */
-        mensajeConfirmacion();
+        if (matriculaValida && contrasenaValida) {
+            /* Aquí se muestra un mensaje de confirmación de acceso */
+            mensajeConfirmacion();
+            return true;
+        } else {
+            System.out.println("Credenciales inválidas 🚫");
+            return false;
+        }
     }
 
-    /* Método para leer matrícula del usuario */
     private static String leerMatricula() {
         System.out.println("Ingrese su matrícula:");
         return sc.nextLine();
     }
 
-    /* Método para leer contraseña del usuario */
     private static String leerContrasena() {
         System.out.println("Ingrese su contraseña:");
         return sc.nextLine();
     }
 
-    /* Método para validar matrícula (siempre devuelve true porque es un prototipo) */
-    private static Boolean validarMatricula(String matricula) {
-        return true;
+    private static boolean validarMatricula(String matricula) {
+        return true; // Simulación
     }
 
-    /* Método para validar contraseña (siempre devuelve true porque es un prototipo) */
-    private static Boolean validarContrasena(String contrasena) {
-        return true;
+    private static boolean validarContrasena(String contrasena) {
+        return true; // Simulación
     }
 
-    /* Método para mostrar un mensaje de confirmación */
     private static void mensajeConfirmacion() {
-        System.out.println("Acceso Confirmado");
+        System.out.println("Acceso Confirmado ✅");
     }
 }

@@ -4,10 +4,17 @@ public class Menu {
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+        // Primero validar usuario
+        boolean accesoPermitido = Validacion.iniciarSesion();
         // TODO: Implementar la lógica inicial y llamada a los métodos necesarios.
-        System.out.println("Ejecutando reservasLogias...");
-        reservasLogias.main(new String[0]);
-        menu();
+        if (accesoPermitido) {
+            // Si accede correctamente, continuar
+            System.out.println("Ejecutando reservasLogias...");
+            menu();
+            reservasLogias.main(new String[0]);
+        } else {
+            System.out.println("Acceso Denegado. 🚫 Saliendo del sistema.");
+        }
 
     }
 
@@ -19,7 +26,7 @@ public class Menu {
             if (opcion != -1) {
                 ejecutarOpcion(opcion);
             }
-        } while (opcion != 6);
+        } while (opcion != 5);
     }
 
     public static void mostrarOpciones() {
