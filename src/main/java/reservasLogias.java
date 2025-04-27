@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class reservasLogias {
@@ -21,6 +22,7 @@ public class reservasLogias {
         horas[0][4]="[4]jueves";
         horas[0][5]="[5]viernes";
     }
+
     public static void llenarHoras(){
         horas[1][0]="[1]   8:30-9:30";
         horas[2][0]="[2]  9:40-10:40";
@@ -41,6 +43,22 @@ public class reservasLogias {
             }
         }
     }
+    private static void imprimirDias(){
+        System.out.println("[1]lunes\n[2]martes\n[3]miercoles\n[4]jueves\n[5]viernes");
+    }
+    public static void imprimirHoras() {
+        System.out.println(
+                "[1]   8:30-9:30\n" +
+                        "[2]   9:40-10:40\n" +
+                        "[3]  10:50-11:50\n" +
+                        "[4]  12:00-13:00\n" +
+                        "[5]  13:10-14:10\n" +
+                        "[6]  14:30-15:30\n" +
+                        "[7]  15:40-16:40\n" +
+                        "[8]  16:50-17:50\n" +
+                        "[9]  18:00-19:00"
+        );
+    }
     public static void leerMatriz(String[][] resultado) {
         System.out.println("\nMatriz Resultante:");
         for (String[] fila : resultado) {
@@ -52,6 +70,7 @@ public class reservasLogias {
     }
     public static int obtenerHora() {
         int hora = 0;
+        imprimirHoras();
         System.out.println("ingrese el numero indicado en corchetes de la hora deseada");
         try {
             hora = sc.nextInt();
@@ -65,6 +84,7 @@ public class reservasLogias {
     }
     public static int obtenerDia() {
         int dia = 0;
+        imprimirDias();
         System.out.println("ingrese el numero indicado en corchetes del dia deseado");
         try {
             dia = sc.nextInt();
@@ -76,6 +96,7 @@ public class reservasLogias {
     private static boolean validarDia(int dia){
         return dia >= 1 && dia <=5;
     }
+
     private static void seleccionarDiaHora() {
         int dia = obtenerDia();
         int hora = obtenerHora();
@@ -93,39 +114,38 @@ public class reservasLogias {
 
         horas[hora][dia]=Validacion.leerMatricula();
 
-        /*switch (hora){
-            case 1 -> horas[1][0]="21797495k23";
-            case 2 -> horas[2][0]="cambio";
-            case 3 -> horas[3][0]="cambio";
-            case 4 -> horas[4][0]="cambio";
-            case 5 -> horas[5][0]="cambio";
-            case 6 -> horas[6][0]="cambio";
-            case 7 -> horas[7][0]="cambio";
-            case 8 -> horas[8][0]="cambio";
-            case 9 -> horas[9][0]="cambio";
-        } */
     }
+
     private static void eliminarReserva() {
         String matricula = Validacion.leerMatricula();
-        int dia = obtenerDia();
-        int hora = obtenerHora();
-        if (horas[dia][hora].equals(matricula)) {
-            horas[dia][hora] = "1";
-            System.out.println("Su reserva se elimino exitosamente");
-        } else {
-            System.out.println("Usted no tiene reservas hechas");
+        for (int i = 0; i < horas.length; i++) {
+            for (int j = 0; j < horas[i].length; j++) {
+                if (horas[i][j].equals(matricula)) {
+                    horas[i][j] = "1";
+                    System.out.println("Su reserva se elimino exitosamente");
+                    return;
+                }
+            }
         }
+        System.out.println("Usted no tiene reservas hechas");
     }
+
     private static void mostrarMatriz(String[][] matriz) {
         System.out.println("\nMatriz Resultante:");
+
+        //nueva matriz para no cambiar la original
+        String[][] matrizCopia = new String[matriz.length][];
+        for (int i = 0; i < matriz.length; i++) {
+            matrizCopia[i] = Arrays.copyOf(matriz[i], matriz[i].length);}
+
         for (int i = 0; i < matriz.length; i++) {
             for (int j = 0; j < matriz[i].length; j++) {
                 if (i == 0 || j == 0) {
                     // Imprimir el valor original para la fila 0 o columna 0
-                    System.out.print(matriz[i][j] + " ");
+                    System.out.print(matrizCopia[i][j] + " ");
                 } else {
                     // Aplicar la condición de "disponible" o "reservado" desde la fila 1 y columna 1 en adelante
-                    if ("1".equals(matriz[i][j])) {
+                    if ("1".equals(matrizCopia[i][j])) {
                         System.out.print("disponible ");
                     } else {
                         System.out.print("reservado ");
