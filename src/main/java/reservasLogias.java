@@ -74,17 +74,22 @@ public class reservasLogias {
     private static boolean validarDia(int dia){
         return dia >= 1 && dia <=5;
     }
-    private static void seleccionarDiaHora(){
-        int hora = obtenerHora();
-        while(!validarHora(hora)) {
-            System.out.println("Hora fuera de rango intente de nuevo");
-            hora= obtenerHora();}
+    private static void seleccionarDiaHora() {
         int dia = obtenerDia();
+        int hora = obtenerHora();
+
         while (!validarDia(dia)) {
             System.out.println("Dia fuera de rango intente de nuevo");
             dia = obtenerDia();
         }
-        horas[hora][dia]="matricula?";
+        while (!validarHora(hora)) {
+            System.out.println("Hora fuera de rango intente de nuevo");
+            hora = obtenerHora();
+
+
+        }
+
+        horas[hora][dia]=Validacion.leerMatricula();
 
         /*switch (hora){
             case 1 -> horas[1][0]="21797495k23";

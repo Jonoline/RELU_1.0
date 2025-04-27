@@ -5,7 +5,7 @@ public class Validacion {
     public static void main(String[] args){
 
     }
-    private static String leerMatricula(){
+    public static String leerMatricula(){
         System.out.println("ingrese su matrícula");
         return sc.nextLine();
     }
