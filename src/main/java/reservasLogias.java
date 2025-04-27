@@ -9,9 +9,9 @@ public class reservasLogias {
         llenarHoras();
         llenarHorarios();
         seleccionarDiaHora();
-        leerMatriz(horas);
+        mostrarMatriz(horas);
         eliminarReserva();
-        leerMatriz(horas);
+        mostrarMatriz(horas);
     }
     public static void llenarDias(){
         horas[0][0]="";
@@ -109,10 +109,32 @@ public class reservasLogias {
         String matricula = Validacion.leerMatricula();
         int dia = obtenerDia();
         int hora = obtenerHora();
-        if (horas[dia][hora] == matricula) {
+        if (horas[dia][hora].equals(matricula)) {
             horas[dia][hora] = "1";
+            System.out.println("Su reserva se elimino exitosamente");
         } else {
-            System.out.println("Esta reserva no es suya");
+            System.out.println("Usted no tiene reservas hechas");
         }
     }
+    private static void mostrarMatriz(String[][] matriz) {
+        System.out.println("\nMatriz Resultante:");
+        for (int i = 0; i < matriz.length; i++) {
+            for (int j = 0; j < matriz[i].length; j++) {
+                if (i == 0 || j == 0) {
+                    // Imprimir el valor original para la fila 0 o columna 0
+                    System.out.print(matriz[i][j] + " ");
+                } else {
+                    // Aplicar la condición de "disponible" o "reservado" desde la fila 1 y columna 1 en adelante
+                    if ("1".equals(matriz[i][j])) {
+                        System.out.print("disponible ");
+                    } else {
+                        System.out.print("reservado ");
+                    }
+                }
+            }
+            System.out.println();
+        }
+    }
+
+
 }
