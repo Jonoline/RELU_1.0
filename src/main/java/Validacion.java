@@ -17,22 +17,22 @@ public class Validacion {
 
         matriculaGuardada = leerMatricula();
         if (!validarMatricula(matriculaGuardada)) {
-            System.out.println("matricula invalida");
+            System.out.println("Matricula invalida");
             return false;
         }
         if (!validarContrasena(leerContrasena())) {
-            System.out.println("contraseña invalida");
+            System.out.println("Contraseña invalida");
             return false;
         }
         System.out.println("Acceso confirmado \n");
         return true;
     }
     public static String leerMatricula(){
-        System.out.println("ingrese su matrícula: ");
-        return sc.nextLine();
+        System.out.println("Ingrese su matrícula: ");
+        return sc.nextLine().toLowerCase();
     }
     private static String leerContrasena(){
-        System.out.println("ingrese su contraseña:");
+        System.out.println("Ingrese su contraseña:");
         return sc.nextLine();
     }
     public static Boolean validarMatricula(String matricula){

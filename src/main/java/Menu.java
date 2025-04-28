@@ -6,6 +6,7 @@ public class Menu {
     public static void main(String[] args) {
         reservasLogias.main(new String[0]);
         // Primero validar usuario
+        System.out.println("===BIENVENIDO A RELU===");
         boolean accesoPermitido;
         do {
             accesoPermitido = Validacion.iniciarSesion();

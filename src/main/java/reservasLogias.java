@@ -20,12 +20,12 @@ public class reservasLogias {
         }
     }
     public static void llenarDias(){
-        horas[0][0]="";
-        horas[0][1]="[1]lunes";
-        horas[0][2]="[2]martes";
-        horas[0][3]="[3]miercoles";
-        horas[0][4]="[4]jueves";
-        horas[0][5]="[5]viernes";
+        horas[0][0]="===============";
+        horas[0][1]="[1]Lunes";
+        horas[0][2]="[2]Martes";
+        horas[0][3]="[3]Miércoles";
+        horas[0][4]="[4]Jueves";
+        horas[0][5]="[5]Viernes";
     }
 
     public static void llenarHoras(){
