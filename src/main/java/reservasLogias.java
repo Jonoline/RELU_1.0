@@ -11,8 +11,12 @@ public class reservasLogias {
         llenarHorarios();
     }
     public static void iniciarReserva() {
+        if(verificarReserva(Validacion.matriculaGuardada)){
         mostrarMatriz(horas);
-        seleccionarDiaHora(Validacion.matriculaGuardada);
+        seleccionarDiaYHora(Validacion.matriculaGuardada);}
+        else {
+            System.out.println("Usted ya tiene una hora reservada, cancele su reserva para realizar otra");
+        }
     }
     public static void llenarDias(){
         horas[0][0]="";
@@ -82,7 +86,7 @@ public class reservasLogias {
         return dia >= 1 && dia <=5;
     }
 
-    private static void seleccionarDiaHora(String matricula) {
+    private static void seleccionarDiaYHora(String matricula) {
         int dia = obtenerDia();
         int hora = obtenerHora();
 
@@ -94,12 +98,17 @@ public class reservasLogias {
             System.out.println("Hora fuera de rango intente de nuevo");
             hora = obtenerHora();
 
-
         }
+        verificarReserva(hora,dia,matricula);
 
-        horas[hora][dia]=matricula;
-        System.out.println("Hora agendada correctamente");
-
+    }
+    private static void verificarReserva(int hora,int dia, String matricula){
+        if(horas[hora][dia].equals("1")){
+            horas[hora][dia]=matricula;
+            System.out.println("Hora agendada correctamente");}
+        else {
+            System.out.println("Esta hora ya esta reservada, intente nuevamente");
+    }
     }
 
     static void eliminarReserva(String matricula) {
@@ -140,6 +149,16 @@ public class reservasLogias {
             System.out.println();
         }
     }
+    private static boolean verificarReserva(String matricula){
+        for (int i = 0; i < horas.length; i++) {
+            for (int j = 0; j < horas[i].length; j++) {
+                if (horas[i][j].equals(matricula)) {
+                    return false;
 
+                }
+            }
+        }
+        return true;
+    }
 
 }
