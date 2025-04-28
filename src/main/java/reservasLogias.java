@@ -6,14 +6,11 @@ public class reservasLogias {
     private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-        if (Validacion.iniciarSesion()){
+
         llenarDias();
         llenarHoras();
         llenarHorarios();
-        seleccionarDiaHora(Validacion.matriculaGuardada);
-        mostrarMatriz(horas);
-        eliminarReserva(Validacion.matriculaGuardada);
-        mostrarMatriz(horas);}
+
     }
     public static void iniciarReserva() {
         mostrarMatriz(horas);
