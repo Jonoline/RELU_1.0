@@ -6,6 +6,8 @@ public class Validacion {
     private static final Scanner sc = new Scanner(System.in);
     static ArrayList<String> datos = new ArrayList<>(1);
 
+    public static String matriculaGuardada;
+
     public static boolean iniciarSesion(){
         /*Datos para simular una base de datos */
         datos.add("21797495k23");
@@ -14,10 +16,11 @@ public class Validacion {
         datos.add("21717876223");
 
         System.out.println("====== Iniciar Sesión ======");
-        boolean matriculaValida = validarMatricula(leerMatricula());
+        matriculaGuardada = leerMatricula();
+        boolean matriculaValida = validarMatricula(matriculaGuardada);
         boolean contrasenaValida = validarContrasena(leerContrasena());
         if (matriculaValida && contrasenaValida){
-            System.out.println("Acesso confirmado");
+            System.out.println("Acceso confirmado");
             return true;
         } else {
             System.out.println("credenciales invalidas");

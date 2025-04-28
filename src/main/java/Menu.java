@@ -88,11 +88,14 @@ public class Menu {
         /*Menu que muestra todas las horas posibles para reservar */
 
         System.out.println("🕒 Seleccione un horario:");
-        System.out.println("[1] 08:30 - 10:00");
-        System.out.println("[2] 10:00 - 11:30");
-        System.out.println("[3] 11:30 - 13:00");
-        System.out.println("[4] 14:30 - 16:00");
-        System.out.println("[5] 16:00 - 17:30");
-        System.out.println("[6] 17:30 - 19:00");
+        System.out.println("[1]   8:30-9:30\n" +
+                "[2]   9:40-10:40\n" +
+                "[3]  10:50-11:50\n" +
+                "[4]  12:00-13:00\n" +
+                "[5]  13:10-14:10\n" +
+                "[6]  14:30-15:30\n" +
+                "[7]  15:40-16:40\n" +
+                "[8]  16:50-17:50\n" +
+                "[9]  18:00-19:00");
     }
 }

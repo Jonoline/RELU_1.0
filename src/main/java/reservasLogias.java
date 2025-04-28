@@ -6,13 +6,21 @@ public class reservasLogias {
     private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+        if (Validacion.iniciarSesion()){
         llenarDias();
         llenarHoras();
         llenarHorarios();
-        seleccionarDiaHora();
+        seleccionarDiaHora(Validacion.matriculaGuardada);
         mostrarMatriz(horas);
-        eliminarReserva();
+        eliminarReserva(Validacion.matriculaGuardada);
+        mostrarMatriz(horas);}
+    }
+    public static void iniciarReserva() {
         mostrarMatriz(horas);
+        seleccionarDiaHora(Validacion.matriculaGuardada);
+    }
+    public static void eliminarReserva() {
+        eliminarReserva(Validacion.matriculaGuardada);
     }
     public static void llenarDias(){
         horas[0][0]="";
@@ -43,22 +51,7 @@ public class reservasLogias {
             }
         }
     }
-    private static void imprimirDias(){
-        System.out.println("[1]lunes\n[2]martes\n[3]miercoles\n[4]jueves\n[5]viernes");
-    }
-    public static void imprimirHoras() {
-        System.out.println(
-                "[1]   8:30-9:30\n" +
-                        "[2]   9:40-10:40\n" +
-                        "[3]  10:50-11:50\n" +
-                        "[4]  12:00-13:00\n" +
-                        "[5]  13:10-14:10\n" +
-                        "[6]  14:30-15:30\n" +
-                        "[7]  15:40-16:40\n" +
-                        "[8]  16:50-17:50\n" +
-                        "[9]  18:00-19:00"
-        );
-    }
+
     public static void leerMatriz(String[][] resultado) {
         System.out.println("\nMatriz Resultante:");
         for (String[] fila : resultado) {
@@ -70,7 +63,7 @@ public class reservasLogias {
     }
     public static int obtenerHora() {
         int hora = 0;
-        imprimirHoras();
+        Menu.mostrarOpcionesHoras();
         System.out.println("ingrese el numero indicado en corchetes de la hora deseada");
         try {
             hora = sc.nextInt();
@@ -84,7 +77,7 @@ public class reservasLogias {
     }
     public static int obtenerDia() {
         int dia = 0;
-        imprimirDias();
+        Menu.mostrarOpcionesDias();
         System.out.println("ingrese el numero indicado en corchetes del dia deseado");
         try {
             dia = sc.nextInt();
@@ -97,7 +90,7 @@ public class reservasLogias {
         return dia >= 1 && dia <=5;
     }
 
-    private static void seleccionarDiaHora() {
+    private static void seleccionarDiaHora(String matricula) {
         int dia = obtenerDia();
         int hora = obtenerHora();
 
@@ -112,12 +105,11 @@ public class reservasLogias {
 
         }
 
-        horas[hora][dia]=Validacion.leerMatricula();
+        horas[hora][dia]=matricula;
 
     }
 
-    private static void eliminarReserva() {
-        String matricula = Validacion.leerMatricula();
+    private static void eliminarReserva(String matricula) {
         for (int i = 0; i < horas.length; i++) {
             for (int j = 0; j < horas[i].length; j++) {
                 if (horas[i][j].equals(matricula)) {
