@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class reservasLogias {
@@ -60,26 +61,39 @@ public class reservasLogias {
     public static int obtenerHora() {
         int hora = 0;
         Menu.mostrarOpcionesHoras();
-        System.out.println("ingrese el numero indicado en corchetes de la hora deseada");
-        try {
-            hora = sc.nextInt();
-        } catch (NumberFormatException e) {
-            System.out.println("ingrese un numero valido");
+        boolean entradaValida = false;
+        while (!entradaValida) {
+            System.out.println("Ingrese el número indicado en corchetes de la hora deseada:");
+            try {
+                hora = sc.nextInt();
+                entradaValida = true;  // Entrada válida
+            } catch (InputMismatchException e) {
+                System.out.println("Ingrese un número válido.");
+                sc.nextLine(); // Limpia el búfer
+            }
         }
         return hora;
     }
+
     private static boolean validarHora(int hora){
         return hora >= 1 && hora <=9;
     }
     public static int obtenerDia() {
         int dia = 0;
         Menu.mostrarOpcionesDias();
-        System.out.println("ingrese el numero indicado en corchetes del dia deseado");
-        try {
-            dia = sc.nextInt();
-        } catch (NumberFormatException e) {
-            System.out.println("ingrese un numero valido");
+        boolean entradaValida = false;
+
+        while (!entradaValida) {
+            System.out.println("Ingrese el número indicado en corchetes del día deseado:");
+            try {
+                dia = sc.nextInt();
+                entradaValida = true;
+            } catch (InputMismatchException e) {
+                System.out.println("Ingrese un número válido.");
+                sc.nextLine(); // Limpia el búfer de entrada
+            }
         }
+
         return dia;
     }
     private static boolean validarDia(int dia){
