@@ -8,13 +8,14 @@ public class Validacion {
 
     public static String matriculaGuardada;
 
-    public static boolean iniciarSesion() {
-        /*Datos para simular una base de datos */
+    static{/*Datos para simular una base de datos */
         datos.add("21797495k23");
         datos.add("21437088323");
         datos.add("21697810223");
         datos.add("21717876223");
+    }
 
+    public static boolean iniciarSesion() {
         matriculaGuardada = leerMatricula();
         if (!validarMatricula(matriculaGuardada)) {
             System.out.println("Matricula invalida");
