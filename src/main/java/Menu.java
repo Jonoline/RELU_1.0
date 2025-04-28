@@ -10,8 +10,9 @@ public class Menu {
         if (accesoPermitido) {
             // Si accede correctamente, continuar
             System.out.println("Ejecutando reservasLogias...");
-            menu();
             reservasLogias.main(new String[0]);
+            menu();
+
         } else {
             System.out.println("Acceso Denegado. 🚫 Saliendo del sistema.");
         }
@@ -57,10 +58,8 @@ public class Menu {
 
     public static void ejecutarOpcion(int opcion) {
         switch (opcion) {
-            case 1 -> {
-                reservasLogias.iniciarReserva();
-            }
-            case 2 -> System.out.println("Opcion 2 ");
+            case 1 -> reservasLogias.iniciarReserva();
+            case 2 -> reservasLogias.eliminarReserva(Validacion.matriculaGuardada);
             case 3 -> System.out.println("Opcion 3 ");
             case 4 -> System.out.println("Opcion 4 ");
             case 5 -> System.out.println("Opcion 5 ");

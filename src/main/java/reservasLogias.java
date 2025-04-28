@@ -6,18 +6,13 @@ public class reservasLogias {
     private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
-
         llenarDias();
         llenarHoras();
         llenarHorarios();
-
     }
     public static void iniciarReserva() {
         mostrarMatriz(horas);
         seleccionarDiaHora(Validacion.matriculaGuardada);
-    }
-    public static void eliminarReserva() {
-        eliminarReserva(Validacion.matriculaGuardada);
     }
     public static void llenarDias(){
         horas[0][0]="";
@@ -103,10 +98,11 @@ public class reservasLogias {
         }
 
         horas[hora][dia]=matricula;
+        System.out.println("Hora agendada correctamente");
 
     }
 
-    private static void eliminarReserva(String matricula) {
+    static void eliminarReserva(String matricula) {
         for (int i = 0; i < horas.length; i++) {
             for (int j = 0; j < horas[i].length; j++) {
                 if (horas[i][j].equals(matricula)) {
