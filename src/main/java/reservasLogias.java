@@ -48,16 +48,6 @@ public class reservasLogias {
             }
         }
     }
-
-    public static void leerMatriz(String[][] resultado) {
-        System.out.println("\nMatriz Resultante:");
-        for (String[] fila : resultado) {
-            for (String val : fila) {
-                System.out.print(val + " ");
-            }
-            System.out.println();
-        }
-    }
     public static int obtenerHora() {
         int hora = 0;
         Menu.mostrarOpcionesHoras();
