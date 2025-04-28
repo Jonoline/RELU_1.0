@@ -39,7 +39,7 @@ public class Menu {
         System.out.println("============================= ");
         System.out.println("    [1] Agendar Reserva de Logias");
         System.out.println("    [2] Eliminar Reserva de Logias");
-        System.out.println("    [3] Ver Logias Reservadas");
+        System.out.println("    [3] Ver Logias");
         System.out.println("    [4] Cerrar sesión");
         System.out.println("    [5] Salir");
 
@@ -62,7 +62,7 @@ public class Menu {
         switch (opcion) {
             case 1 -> reservasLogias.iniciarReserva();
             case 2 -> reservasLogias.eliminarReserva(Validacion.matriculaGuardada);
-            case 3 -> System.out.println("Opcion 3 ");
+            case 3 -> reservasLogias.verLogias();
             case 4 -> cerrarSesion();
             case 5 -> System.out.println("saliendo del programa...");
             default -> System.out.println("Opción inválida...");

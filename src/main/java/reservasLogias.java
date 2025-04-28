@@ -149,6 +149,9 @@ public class reservasLogias {
             System.out.println();
         }
     }
+    public static void verLogias(){
+        mostrarMatriz(horas);
+    }
     private static boolean verificarReserva(String matricula){
         for (int i = 0; i < horas.length; i++) {
             for (int j = 0; j < horas[i].length; j++) {
