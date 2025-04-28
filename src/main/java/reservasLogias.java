@@ -129,8 +129,6 @@ public class reservasLogias {
     }
 
     private static void mostrarMatriz(String[][] matriz) {
-        System.out.println("\nMatriz Resultante:");
-
         //nueva matriz para no cambiar la original
         String[][] matrizCopia = new String[matriz.length][];
         for (int i = 0; i < matriz.length; i++) {
