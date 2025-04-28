@@ -6,13 +6,14 @@ public class Menu {
     public static void main(String[] args) {
         reservasLogias.main(new String[0]);
         // Primero validar usuario
-        boolean accesoPermitido = Validacion.iniciarSesion();
-        // TODO: Implementar la lógica inicial y llamada a los métodos necesarios.
-        if (accesoPermitido) {
-            menu();
-        } else {
-            System.out.println("Acceso Denegado. 🚫 Saliendo del sistema.");
-        }
+        boolean accesoPermitido;
+        do {
+            accesoPermitido = Validacion.iniciarSesion();
+            if (!accesoPermitido) {
+                System.out.println("Acceso Denegado. Intente nuevamente.");
+            }
+        } while (!accesoPermitido);
+        menu();
 
     }
 
@@ -99,11 +100,15 @@ public class Menu {
                 "[9]  18:00-19:00");
     }
     private static void cerrarSesion(){
-        boolean accesoPermitido = Validacion.iniciarSesion();
-        if (accesoPermitido) {
-            menu();
-        } else {
-            System.out.println("Acceso Denegado. 🚫 Saliendo del sistema.");
-        }
+        boolean accesoPermitido;
+
+        do {
+            accesoPermitido = Validacion.iniciarSesion();
+            if (!accesoPermitido) {
+                System.out.println("Acceso Denegado.  Intente nuevamente.");
+            }
+        } while (!accesoPermitido);
+
+        menu();
     }
 }
