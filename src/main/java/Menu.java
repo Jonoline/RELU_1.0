@@ -4,15 +4,12 @@ public class Menu {
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
+        reservasLogias.main(new String[0]);
         // Primero validar usuario
         boolean accesoPermitido = Validacion.iniciarSesion();
         // TODO: Implementar la lógica inicial y llamada a los métodos necesarios.
         if (accesoPermitido) {
-            // Si accede correctamente, continuar
-            System.out.println("Ejecutando reservasLogias...");
-            reservasLogias.main(new String[0]);
             menu();
-
         } else {
             System.out.println("Acceso Denegado. 🚫 Saliendo del sistema.");
         }
@@ -24,7 +21,11 @@ public class Menu {
         do {
             mostrarOpciones();
             opcion = obtenerOpcion(0);
-            if (opcion != -1) {
+            if (opcion==4) {
+                ejecutarOpcion(opcion);
+                break;
+            }
+            else if (opcion !=-1) {
                 ejecutarOpcion(opcion);
             }
         } while (opcion != 5);
@@ -38,7 +39,7 @@ public class Menu {
         System.out.println("    [1] Agendar Reserva de Logias");
         System.out.println("    [2] Eliminar Reserva de Logias");
         System.out.println("    [3] Ver Logias Reservadas");
-        System.out.println("    [4] Ver Historial Logias Reservadas");
+        System.out.println("    [4] Cerrar sesión");
         System.out.println("    [5] Salir");
 
 
@@ -61,8 +62,8 @@ public class Menu {
             case 1 -> reservasLogias.iniciarReserva();
             case 2 -> reservasLogias.eliminarReserva(Validacion.matriculaGuardada);
             case 3 -> System.out.println("Opcion 3 ");
-            case 4 -> System.out.println("Opcion 4 ");
-            case 5 -> System.out.println("Opcion 5 ");
+            case 4 -> cerrarSesion();
+            case 5 -> System.out.println("saliendo del programa...");
             default -> System.out.println("Opción inválida...");
         }
     }
@@ -96,5 +97,13 @@ public class Menu {
                 "[7]  15:40-16:40\n" +
                 "[8]  16:50-17:50\n" +
                 "[9]  18:00-19:00");
+    }
+    private static void cerrarSesion(){
+        boolean accesoPermitido = Validacion.iniciarSesion();
+        if (accesoPermitido) {
+            menu();
+        } else {
+            System.out.println("Acceso Denegado. 🚫 Saliendo del sistema.");
+        }
     }
 }

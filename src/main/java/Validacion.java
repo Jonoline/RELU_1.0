@@ -8,26 +8,24 @@ public class Validacion {
 
     public static String matriculaGuardada;
 
-    public static boolean iniciarSesion(){
+    public static boolean iniciarSesion() {
         /*Datos para simular una base de datos */
         datos.add("21797495k23");
         datos.add("21437088323");
         datos.add("21697810223");
         datos.add("21717876223");
 
-        System.out.println("====== Iniciar Sesión ======");
         matriculaGuardada = leerMatricula();
-        boolean matriculaValida = validarMatricula(matriculaGuardada);
-        boolean contrasenaValida = validarContrasena(leerContrasena());
-        if (matriculaValida && contrasenaValida){
-            System.out.println("Acceso confirmado");
-            return true;
-        } else {
-            System.out.println("credenciales invalidas");
+        if (!validarMatricula(matriculaGuardada)) {
+            System.out.println("matricula invalida");
             return false;
         }
-
-
+        if (!validarContrasena(leerContrasena())) {
+            System.out.println("contraseña invalida");
+            return false;
+        }
+        System.out.println("Acceso confirmado \n");
+        return true;
     }
     public static String leerMatricula(){
         System.out.println("ingrese su matrícula: ");
