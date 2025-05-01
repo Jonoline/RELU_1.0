@@ -103,7 +103,7 @@ public class Menu {
                 [9]  18:00-19:00""");
     }
     private static void cerrarSesion(){
-        System.out.println("Hasta luego!");
+        System.out.println("Hasta luego!!");
         boolean accesoPermitido;
         do {
             accesoPermitido = Validacion.iniciarSesion();
