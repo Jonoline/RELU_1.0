@@ -7,6 +7,10 @@ public class Menu {
         reservasLogias.main(new String[0]);
         // Primero validar usuario
         System.out.println("===BIENVENIDO A RELU===");
+        menuiniciarSesion();
+
+    }
+    private static void menuiniciarSesion(){
         boolean accesoPermitido;
         do {
             accesoPermitido = Validacion.iniciarSesion();
@@ -66,7 +70,7 @@ public class Menu {
             case 2 -> reservasLogias.eliminarReserva(Validacion.matriculaGuardada);
             case 3 -> reservasLogias.verLogias();
             case 4 -> cerrarSesion();
-            case 5 -> System.out.println("saliendo del programa...");
+            case 5 -> System.out.println("Saliendo del programa...");
             default -> System.out.println("Opción inválida...");
         }
     }
@@ -102,16 +106,8 @@ public class Menu {
                 [8]  16:50-17:50
                 [9]  18:00-19:00""");
     }
-    private static void cerrarSesion(){
+    private static void cerrarSesion() {
         System.out.println("Hasta luego!!");
-        boolean accesoPermitido;
-        do {
-            accesoPermitido = Validacion.iniciarSesion();
-            if (!accesoPermitido) {
-                System.out.println("Acceso Denegado.  Intente nuevamente.");
-            }
-        } while (!accesoPermitido);
-
-        menu();
+        menuiniciarSesion();
     }
 }

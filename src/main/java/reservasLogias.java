@@ -48,6 +48,7 @@ public class reservasLogias {
             }
         }
     }
+    // obtener hora debe ser separado bien, en el nuevo obtener debemos usar sc.nextLine y despues en validar se pasa a int
     public static int obtenerHora() {
         int hora = 0;
         Menu.mostrarOpcionesHoras();
@@ -68,6 +69,7 @@ public class reservasLogias {
     private static boolean validarHora(int hora){
         return hora >= 1 && hora <=9;
     }
+    // obtener dia debe ser separado bien, en el nuevo obtener debemos usar sc.nextLine y despues en validar se pasa a int
     public static int obtenerDia() {
         int dia = 0;
         Menu.mostrarOpcionesDias();
@@ -155,6 +157,8 @@ public class reservasLogias {
         mostrarMatriz(horas);
     }
     private static boolean verificarReserva(String matricula){
+        // Busca si la matricula esta en la matriz
+        //devuelve falso si esta en la matriz para que la matricula no pueda agendar 2 horas de logia
         for (int i = 0; i < horas.length; i++) {
             for (int j = 0; j < horas[i].length; j++) {
                 if (horas[i][j].equals(matricula)) {
