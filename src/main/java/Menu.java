@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Menu {
-    private static Scanner sc = new Scanner(System.in);
+    private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         // Primero validar usuario
@@ -22,7 +22,7 @@ public class Menu {
         int opcion;
         do {
             mostrarOpciones();
-            opcion = obtenerOpcion(0);
+            opcion = obtenerOpcion();
             if (opcion != -1) {
                 ejecutarOpcion(opcion);
             }
@@ -45,7 +45,8 @@ public class Menu {
         System.out.print("      Opcion: ");
     }
 
-    public static int obtenerOpcion(int opcion) {
+    public static int obtenerOpcion() {
+        int opcion;
         try {
             opcion = Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {
@@ -57,9 +58,7 @@ public class Menu {
 
     public static void ejecutarOpcion(int opcion) {
         switch (opcion) {
-            case 1 -> {
-                reservasLogias.iniciarReserva();
-            }
+            case 1 -> reservasLogias.iniciarReserva();
             case 2 -> System.out.println("Opcion 2 ");
             case 3 -> System.out.println("Opcion 3 ");
             case 4 -> System.out.println("Opcion 4 ");

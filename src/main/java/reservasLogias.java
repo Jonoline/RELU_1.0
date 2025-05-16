@@ -1,8 +1,8 @@
 import java.util.Scanner;
 
 public class reservasLogias {
-    private static String[][] horas = new String[10][6];
-    private static Scanner sc = new Scanner(System.in);
+    private static final String[][] horas = new String[10][6];
+    private static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
         llenarDias();
