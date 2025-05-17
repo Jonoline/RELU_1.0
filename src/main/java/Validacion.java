@@ -49,6 +49,9 @@ public class Validacion {
     }
 
     private static boolean validarMatricula(String matricula) {
+        Usuario a = new Usuario("Ana Pérez", "25673725921", "clave12345");
+        Usuario b = new Usuario("Juan", "25678765922", "clave1234");
+
         return datos.contains(matricula);
     }
 
