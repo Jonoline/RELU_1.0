@@ -5,7 +5,7 @@ public class Menu {
 
     public static void main(String[] args) {
         // Primero validar usuario
-        boolean accesoPermitido = Validacion.iniciarSesion();
+        boolean accesoPermitido = Validacion.validadorIniciarSesion();
         // TODO: Implementar la lógica inicial y llamada a los métodos necesarios.
         if (accesoPermitido) {
             // Si accede correctamente, continuar

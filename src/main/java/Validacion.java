@@ -1,65 +1,67 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-
 public class Validacion {
     private static final Scanner sc = new Scanner(System.in);
     static ArrayList<String> datos = new ArrayList<>(1);
 
-    // Método que encapsula el flujo de inicio de sesión
-    public static boolean iniciarSesion() {
-        System.out.println("====== Iniciar Sesión ======");
+    // Simulación de "base de datos"
+    static {
+        datos.add("Juan,j.alberto14@ufromail.cl,casa1243");
+        datos.add("Ana,a.perez@ufromail.cl,clave123");
+        datos.add("hola,hola,hola");
+    }
 
-        /* se añaden datos a la array como base de datos de ejemplo*/
-        datos.add("21797495k23");
-        datos.add("21437088323");
-        datos.add("21697810223");
-        datos.add("21717876223");
+    public static boolean validadorIniciarSesion() {
+        boolean accesoPermitido = false;
 
-        /* Aquí se está preguntando al usuario de ingresar matrícula */
-        String matricula = leerMatricula();
+        while (!accesoPermitido) {
+            System.out.println("====== Iniciar Sesión ======");
 
-        /* Aquí se está preguntando al usuario de ingresar contraseña */
-        String contrasena = leerContrasena();
+            System.out.print("Ingrese nombre o correo: ");
+            String identificador = sc.nextLine().trim();  //* El trim sirve para eliminar los espacios vacíos *//
 
-        /* Aquí se está "validando" la matrícula ingresada (simulado, siempre true) */
-        boolean matriculaValida = validarMatricula(matricula);
+            System.out.print("Ingrese contraseña: ");
+            String contrasena = sc.nextLine().trim();  //* El trim sirve para eliminar los espacios vacíos *//
 
-        /* Aquí se está "validando" la contraseña ingresada (simulado, siempre true) */
-        boolean contrasenaValida = validarContrasena(contrasena);
+            boolean usuarioExiste = validarNombreOCorreo(identificador);
+            boolean claveCorrecta = validarContrasena(identificador, contrasena);
 
-        if (matriculaValida && contrasenaValida) {
-            /* Aquí se muestra un mensaje de confirmación de acceso */
-            mensajeConfirmacion();
-            return true;
-        } else {
-            System.out.println("Credenciales inválidas 🚫");
-            return false;
+            if (usuarioExiste && claveCorrecta) {
+                System.out.println("Inicio de sesión satisfactorio ✅ Bienvenido, " + identificador + "!");
+                accesoPermitido = true;
+                Menu.menu(); // Llama a tu menú aquí
+            } else {
+                System.out.println("❌❌ Usuario o contraseña inválidos. Intente nuevamente. ❌❌");
+            }
         }
+        return accesoPermitido;
     }
 
-    private static String leerMatricula() {
-        System.out.println("Ingrese su matrícula:");
-        return sc.nextLine();
+    //* El trim sirve para eliminar los espacios vacíos *//
+
+    private static boolean validarNombreOCorreo(String entrada) {
+        for (String dato : datos) {
+            String[] partes = dato.split(",");
+            String nombre = partes[0].trim();  //* El trim sirve para eliminar los espacios vacíos *//
+            String correo = partes[1].trim();  //* El trim sirve para eliminar los espacios vacíos *//
+
+            if (entrada.equals(nombre) || entrada.equals(correo)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    private static String leerContrasena() {
-        System.out.println("Ingrese su contraseña:");
-        return sc.nextLine();
-    }
+    private static boolean validarContrasena(String entrada, String contrasena) {
+        for (String dato : datos) {
+            String[] partes = dato.split(",");
+            String clave = partes[2].trim();  //* El trim sirve para eliminar los espacios vacíos *//
 
-    private static boolean validarMatricula(String matricula) {
-        Usuario a = new Usuario("Ana Pérez", "25673725921", "clave12345");
-        Usuario b = new Usuario("Juan", "25678765922", "clave1234");
-
-        return datos.contains(matricula);
-    }
-
-    private static boolean validarContrasena(String contrasena) {
-        return true; // Simulación
-    }
-
-    private static void mensajeConfirmacion() {
-        System.out.println("Acceso Confirmado ✅");
+            if (clave.equals(contrasena)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
