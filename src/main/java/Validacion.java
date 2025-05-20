@@ -28,11 +28,11 @@ public class Validacion {
             boolean claveCorrecta = validarContrasena(identificador, contrasena);
 
             if (usuarioExiste && claveCorrecta) {
-                System.out.println("Inicio de sesión satisfactorio ✅ Bienvenido, " + identificador + "!");
+                System.out.println("Inicio de sesión satisfactorio, bienvenido, " + identificador + "!");
                 accesoPermitido = true;
-                Menu.menu(); // Llama a tu menú aquí
+                Menu.menu();
             } else {
-                System.out.println("❌❌ Usuario o contraseña inválidos. Intente nuevamente. ❌❌");
+                System.out.println("Usuario o contraseña inválidos. Intente nuevamente.");
             }
         }
         return accesoPermitido;
