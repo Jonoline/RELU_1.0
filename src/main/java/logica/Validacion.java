@@ -1,3 +1,5 @@
+package logica;
+
 import java.util.Scanner;
 import java.util.regex.*;
 import java.util.ArrayList;

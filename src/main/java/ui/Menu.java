@@ -1,41 +1,49 @@
+package ui;
+
+import datos.Usuario;
+import datos.reservasLogias;
+import logica.GestorUsuarios;
+import logica.Json;
+
 import java.util.Scanner;
 
 public class Menu {
     private static final Scanner sc = new Scanner(System.in);
+    private static Usuario usuarioLogueado;
 
-    public static void main(String[] args) {
-        reservasLogias.main(new String[0]);
-        // Primero validar usuario
-        System.out.println("===BIENVENIDO A RELU===");
-        menuiniciarSesion();
-
-    }
-    private static void menuiniciarSesion(){
-        boolean accesoPermitido;
-        do {
-            accesoPermitido = Validacion.iniciarSesion();
-            if (!accesoPermitido) {
-                System.out.println("Acceso Denegado. Intente nuevamente.");
-            }
-        } while (!accesoPermitido);
-        menu();
-
-    }
 
     public static void menu() {
+        reservasLogias.llenarMatriz();
         int opcion;
         do {
             mostrarOpciones();
             opcion = obtenerOpcion();
-            if (opcion==4) {
-                ejecutarOpcion(opcion);
+            if (opcion == 4) {
+                cerrarSesion();
                 break;
-            }
-            else if (opcion !=-1) {
+            } else if (opcion != -1) {
                 ejecutarOpcion(opcion);
             }
         } while (opcion != 5);
     }
+
+
+    public static void menuiniciarSesion() {
+        System.out.println("===BIENVENIDO A RELU===");
+        while (true) {
+            usuarioLogueado = GestorUsuarios.iniciarSesion("usuario.json");
+
+            if (usuarioLogueado == null) {
+                System.out.println("❌ Error al iniciar sesión. Saliendo...");
+                return;
+            }
+
+            reservasLogias.llenarMatriz();
+            System.out.println("\n=== BIENVENIDO A RELU, " + usuarioLogueado.getUfromail() + " ===");
+            menu();  // Aquí se entra al menú principal
+        }
+    }
+
 
     public static void mostrarOpciones() {
         System.out.println("=============================");
@@ -63,12 +71,12 @@ public class Menu {
         }
         return opcion;
     }
-
     public static void ejecutarOpcion(int opcion) {
         switch (opcion) {
-            case 1 -> reservasLogias.iniciarReserva();
-            case 2 -> reservasLogias.eliminarReserva(Validacion.matriculaGuardada);
-            case 3 -> reservasLogias.verLogias();
+            /* OPCIONES NO IMPLEMENADAS CAMBIANDO TODO EL RATO */
+            case 1 -> GestorUsuarios.pedirDatosUsuario();
+            case 2 -> reservasLogias.eliminarReserva(usuarioLogueado.getMatricula());
+            case 3 -> Json.buscarPorMatricula(usuarioLogueado.getMatricula(), "usuario.json");
             case 4 -> cerrarSesion();
             case 5 -> System.out.println("Saliendo del programa...");
             default -> System.out.println("Opción inválida...");
@@ -92,7 +100,7 @@ public class Menu {
 
     public static void mostrarOpcionesHoras() {
 
-        /*Menu que muestra todas las horas posibles para reservar */
+        //Menu que muestra todas las horas posibles para reservar */
 
         System.out.println("🕒 Seleccione un horario:");
         System.out.println("""

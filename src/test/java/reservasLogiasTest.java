@@ -1,3 +1,4 @@
+import datos.reservasLogias;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -8,7 +9,7 @@ class reservasLogiasTest {
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     //IMPORTANTE
     //CADA TEST SOLO FUNCIONA POR SEPARADO
-    //ESTO DEBIDO A LA DECLARACIÓN DEL SCANNER COMO STATIC EN LA CLASE reservasLogias
+    //ESTO DEBIDO A LA DECLARACIÓN DEL SCANNER COMO STATIC EN LA CLASE datos.reservasLogias
     //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private final InputStream originalIn = System.in;
 

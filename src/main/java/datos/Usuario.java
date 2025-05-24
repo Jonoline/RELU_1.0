@@ -23,13 +23,5 @@ public class Usuario {
         return contrasena;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "matricula='" + matricula + '\'' +
-                ", ufromail='" + ufromail + '\'' +
-                ", contrasena='" + contrasena + '\'' +
-                '}';
-    }
 }
 
