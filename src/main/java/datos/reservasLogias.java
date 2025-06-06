@@ -1,3 +1,8 @@
+package datos;
+
+import logica.Validacion;
+import ui.Menu;
+
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -6,11 +11,12 @@ public class reservasLogias {
     private static String[][]horas= new String[10][6];
     private static final Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void llenarMatriz() {
         llenarDias();
         llenarHoras();
         llenarHorarios();
     }
+
     public static void iniciarReserva() {
         if(verificarReserva(Validacion.matriculaGuardada)){
         mostrarMatriz(horas);
@@ -117,7 +123,7 @@ public class reservasLogias {
     }
     }
 
-    static void eliminarReserva(String matricula) {
+    public static void eliminarReserva(String matricula) {
         for (int i = 0; i < horas.length; i++) {
             for (int j = 0; j < horas[i].length; j++) {
                 if (horas[i][j].equals(matricula)) {
