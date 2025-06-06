@@ -3,13 +3,15 @@ package datos;
 public class Reserva {
 
     private String matricula;
-    private String logiaid;
+    private Logia logia;
+    private int capacidad;
     private int dia;
     private int hora;
 
-    public Reserva(String matricula, String logiaid, int dia, int hora) {
+    public Reserva(String matricula, Logia logia, int dia, int hora) {
         this.matricula = matricula;
-        this.logiaid = logiaid;
+        this.logia = logia;
+        this.capacidad = logia.getCapacidad();
         this.dia = dia;
         this.hora = hora;
     }
@@ -17,8 +19,9 @@ public class Reserva {
     public String getMatricula() {
         return matricula;
     }
-    public String getLogiaid() {
-        return logiaid;
+
+    public Logia getLogia() {
+        return logia;
     }
 
     public int getDia() {
@@ -27,5 +30,9 @@ public class Reserva {
 
     public int getHora() {
         return hora;
+    }
+
+    public int getCapacidad() {
+        return capacidad;
     }
 }

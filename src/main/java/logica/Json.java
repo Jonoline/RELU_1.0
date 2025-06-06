@@ -3,8 +3,10 @@ package logica;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import datos.Reserva;
 import datos.Usuario;
 
+import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -14,10 +16,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Json {
+    //crea gson con saltos de lineas y sangrias
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     public static void guardarUsuarioJson(Usuario nuevoUsuario, String rutaArchivo) {
-        //crea gson con saltos de lineas y sangrias
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         //crea lista vacia de usuarios
         List<Usuario> listaUsuarios = new ArrayList<>();
 
@@ -69,6 +71,23 @@ public class Json {
 
         } catch (IOException e) {
             System.out.println("Error al leer el archivo JSON.");
+        }
+    }
+    public static void IngresarReservas(Reserva reservas){
+        try (FileWriter escritor = new FileWriter("reservas.json")){
+            gson.toJson(reservas, escritor);
+            System.out.println("Reservas guardadas");
+        } catch (IOException e) {
+            System.out.println("Error al guardar las reservas en el archivo JSON");
+        }
+    }
+    public static ArrayList<Reserva> CargarReservas(){
+        try(FileReader lector = new FileReader("reservas.json")){
+            Type listType = new TypeToken<ArrayList<Reserva>>(){}.getType();
+            return gson.fromJson(lector, listType);
+        }catch (IOException e){
+            System.out.println("Error al leer el archivo JSON");
+            return new ArrayList<>();
         }
     }
 }
