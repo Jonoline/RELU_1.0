@@ -1,5 +1,6 @@
 package logica;
 
+import datos.Json;
 import datos.Usuario;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -20,10 +21,10 @@ public class GestorUsuarios {
         System.out.print("Ingrese contraseña: ");
         String contrasena = sc.nextLine();
 
-        return new Usuario("", matricula, contrasena); // correo vacío porque no es necesario para login
+        return new Usuario(matricula, contrasena); // correo vacío porque no es necesario para login
     }
 
-    public  Usuario iniciarSesion(Usuario tryUsuario) {
+    public Usuario iniciarSesion(Usuario tryUsuario) {
         for (Usuario u : listaUsuarios) {
             if (u.equals(tryUsuario)) {
                 System.out.println("✅ Inicio de sesión exitoso.");

@@ -35,4 +35,15 @@ public class Reserva {
     public int getCapacidad() {
         return capacidad;
     }
+
+    @Override
+    public String toString() {
+        return "Reserva{" +
+                "matricula='" + matricula + '\'' +
+                ", logia=" + logia +
+                ", capacidad=" + capacidad +
+                ", dia=" + dia +
+                ", hora=" + hora +
+                '}';
+    }
 }

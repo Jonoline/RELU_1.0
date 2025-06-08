@@ -12,6 +12,11 @@ public class Usuario {
         this.matricula = matricula;
         this.contrasena = contrasena;
     }
+    public Usuario(String matricula, String contrasena) {
+        this.ufromail = "";
+        this.matricula = matricula;
+        this.contrasena = contrasena;
+    }
 
     public String getUfromail() {
         return ufromail;

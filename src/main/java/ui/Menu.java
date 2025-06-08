@@ -1,9 +1,7 @@
 package ui;
 
 import datos.Usuario;
-import datos.reservasLogias;
 import logica.GestorUsuarios;
-import logica.Json;
 
 import java.util.Scanner;
 
@@ -12,8 +10,7 @@ public class Menu {
     private static Usuario usuarioLogueado;
 
 
-    public static void menu() {
-        reservasLogias.llenarMatriz();
+    public void menu() {
         int opcion;
         do {
             mostrarOpciones();
@@ -28,17 +25,16 @@ public class Menu {
     }
 
 
-    public static void menuiniciarSesion() {
+    public void menuiniciarSesion() {
         System.out.println("===BIENVENIDO A RELU===");
         while (true) {
-            usuarioLogueado = GestorUsuarios.iniciarSesion("usuario.json");
 
             if (usuarioLogueado == null) {
                 System.out.println("❌ Error al iniciar sesión. Saliendo...");
                 return;
             }
 
-            reservasLogias.llenarMatriz();
+
             System.out.println("\n=== BIENVENIDO A RELU, " + usuarioLogueado.getUfromail() + " ===");
             menu();  // Aquí se entra al menú principal
         }
@@ -74,10 +70,10 @@ public class Menu {
     public static void ejecutarOpcion(int opcion) {
         switch (opcion) {
             /* OPCIONES NO IMPLEMENADAS CAMBIANDO TODO EL RATO */
-            case 1 -> GestorUsuarios.pedirDatosUsuario();
-            case 2 -> reservasLogias.eliminarReserva(usuarioLogueado.getMatricula());
-            case 3 -> Json.buscarPorMatricula(usuarioLogueado.getMatricula(), "usuario.json");
-            case 4 -> cerrarSesion();
+            case 1 -> System.out.println("agendar logia");
+            case 2 -> System.out.println("ver detalle");
+            case 3 -> System.out.println("cancelar reserva");
+            case 4 -> System.out.println("cerrar sesión");
             case 5 -> System.out.println("Saliendo del programa...");
             default -> System.out.println("Opción inválida...");
         }
@@ -114,7 +110,7 @@ public class Menu {
                 [8]  16:50-17:50
                 [9]  18:00-19:00""");
     }
-    private static void cerrarSesion() {
+    private void cerrarSesion() {
         System.out.println("Hasta luego!!");
         menuiniciarSesion();
     }
