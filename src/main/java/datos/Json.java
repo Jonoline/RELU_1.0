@@ -1,16 +1,14 @@
-package logica;
+package datos;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import datos.Reserva;
-import datos.Usuario;
+
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.List;
 
 // deben manejarse excepciones, FilenotFound en esoecial creo:V
 public class Json {
@@ -19,10 +17,10 @@ public class Json {
 
     public ArrayList<Usuario> cargarUsuarioJson() {
         try (FileReader lector = new FileReader("usuarios.json")) {
-            Type tipoLista = new TypeToken<List<Usuario>>() {}.getType();
+            Type tipoLista = new TypeToken<ArrayList<Usuario>>() {}.getType();
             return gson.fromJson(lector, tipoLista);
         } catch (IOException e){
-            return new ArrayList<>();
+            return new ArrayList<Usuario>();
         }
     }
 
