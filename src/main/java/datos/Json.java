@@ -1,7 +1,6 @@
 package datos;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
@@ -9,11 +8,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-
 // deben manejarse excepciones, FilenotFound en esoecial creo:V
 public class Json {
     //crea gson con saltos de lineas y sangrias
-    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private final Gson gson = JavaTimeUtils.obtenerGsonConTiempo();
+
 
     public ArrayList<Usuario> cargarUsuarioJson() {
         try (FileReader lector = new FileReader("usuarios.json")) {

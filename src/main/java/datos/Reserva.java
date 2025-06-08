@@ -1,19 +1,18 @@
 package datos;
 
+import java.time.LocalDateTime;
 public class Reserva {
 
-    private String matricula;
-    private Logia logia;
-    private int capacidad;
-    private int dia;
-    private int hora;
+    private final String matricula;
+    private final Logia logia;
+    private final int capacidad;
+    private final LocalDateTime fechaHora;
 
-    public Reserva(String matricula, Logia logia, int dia, int hora) {
+    public Reserva(String matricula, Logia logia, LocalDateTime fechaHora) {
         this.matricula = matricula;
         this.logia = logia;
         this.capacidad = logia.getCapacidad();
-        this.dia = dia;
-        this.hora = hora;
+        this.fechaHora = fechaHora;
     }
 
     public String getMatricula() {
@@ -24,12 +23,8 @@ public class Reserva {
         return logia;
     }
 
-    public int getDia() {
-        return dia;
-    }
-
-    public int getHora() {
-        return hora;
+    public LocalDateTime getFechaHora() {
+        return fechaHora;
     }
 
     public int getCapacidad() {
@@ -39,11 +34,9 @@ public class Reserva {
     @Override
     public String toString() {
         return "Reserva{" +
-                "matricula='" + matricula + '\'' +
-                ", logia=" + logia +
-                ", capacidad=" + capacidad +
-                ", dia=" + dia +
-                ", hora=" + hora +
+                "matricula=" + matricula + '\n' +
+                ", logia=" + logia + "\n" +
+                ", fechaHora= " + JavaTimeUtils.formatearConHoraFinal(fechaHora) +
                 '}';
     }
 }
