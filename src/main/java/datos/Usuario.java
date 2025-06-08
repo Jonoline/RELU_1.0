@@ -1,5 +1,7 @@
 package datos;
 
+import java.util.Objects;
+
 public class Usuario {
     private final String matricula;
     private final String ufromail;
@@ -23,5 +25,16 @@ public class Usuario {
         return contrasena;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Usuario usuario = (Usuario) o;
+        return Objects.equals(matricula, usuario.matricula) && Objects.equals(contrasena, usuario.contrasena);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(matricula, contrasena);
+    }
 }
 
