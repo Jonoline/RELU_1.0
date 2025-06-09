@@ -12,6 +12,7 @@ public class GestorReservas {
 
     public GestorReservas() {
         reservas = new Json().CargarReservas();
+        limpiezaReservasAntiguas();
     }
     public void agregarReserva(Usuario usuario, Logia logia, LocalDateTime fechaHora){
         reservas.add(new Reserva(usuario.getMatricula(), logia, fechaHora));
@@ -37,14 +38,18 @@ public class GestorReservas {
         reservas.remove(reservaUsuario);
         json.IngresarReservas(reservas);
     }
-    public Boolean verificarTimeReserva(){
+    private void limpiezaReservasAntiguas(){
+        int length = reservas.size();
         for (Reserva r : reservas) {
             if (r.getFechaHora().isBefore(LocalDateTime.now())) {
-                return false;
+                reservas.remove(r);
             }
         }
-        return true;
+        if (length != reservas.size()) {
+        json.IngresarReservas(reservas);
+        }
     }
+
 
 
 }
