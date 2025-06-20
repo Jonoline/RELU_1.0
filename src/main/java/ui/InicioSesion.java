@@ -62,11 +62,11 @@ public class InicioSesion {
 
     }
     private String obtenerUsuario(){
-        System.out.println("Ingrese su usuario");
+        System.out.println("Ingrese su usuario: ");
         return sc.nextLine();
     }
     private String obtenerContrasenia(){
-        System.out.println("Ingrese su contraseña");
+        System.out.println("Ingrese su contraseña: ");
         return sc.nextLine();
     }
 }

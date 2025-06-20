@@ -1,9 +1,36 @@
 package datos;
 
-public class Horario {
-    public static final String[] dias = {"Lunes", "Martes", "Miércoles", "Jueves", "Viernes"};
-    public static final String[] horas = {
-            "8:30-9:30", "9:40-10:40", "10:50-11:50", "12:00-13:00", "13:10-14:10",
-            "14:30-15:30", "15:40-16:40", "16:50-17:50", "18:00-19:00"
-    };
+public enum Horario {
+    BLOQUE_1("08:30", "10:00"),
+    BLOQUE_2("10:00", "11:30"),
+    BLOQUE_3("11:30", "13:00"),
+    BLOQUE_4("13:00", "14:30"),
+    BLOQUE_5("14:30", "16:00"),
+    BLOQUE_6("16:00", "17:30"),
+    BLOQUE_7("17:30", "19:00");
+
+    private final String horaInicio;
+    private final String horaFin;
+
+    Horario(String horaInicio, String horaFin) {
+        this.horaInicio = horaInicio;
+        this.horaFin = horaFin;
+    }
+
+    public String getHoraInicio() {
+        return horaInicio;
+    }
+
+    public String getHoraFin() {
+        return horaFin;
+    }
+    private int getNumeroBloque() {
+        return Integer.parseInt(name().substring(7));
+    }
+
+
+    @Override
+    public String toString() {
+        return "[" + getNumeroBloque() + "] " + horaInicio + "-" + horaFin;
+    }
 }

@@ -10,7 +10,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 // deben manejarse excepciones, FilenotFound en esoecial creo:V
 public class Json {
-    //crea gson con saltos de lineas y sangrias
+    //crea gson con saltos de lineas, sangrias y adaptadores par ael localdatetime
     private final Gson gson = JavaTimeUtils.obtenerGsonConTiempo();
 
 
@@ -40,5 +40,24 @@ public class Json {
             return new ArrayList<Reserva>();
         }
     }
+    public void ingresarLogias(ArrayList<Logia> logias) {
+        try (FileWriter escritor = new FileWriter("logias.json")) {
+            gson.toJson(logias, escritor);
+            System.out.println("Logias guardadas");
+        } catch (IOException e) {
+            System.out.println("Error al guardar las logias en el archivo JSON");
+        }
+    }
+
+    public ArrayList<Logia> cargarLogias() {
+        try (FileReader lector = new FileReader("logias.json")) {
+            Type listType = new TypeToken<ArrayList<Logia>>(){}.getType();
+            return gson.fromJson(lector, listType);
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo JSON");
+            return new ArrayList<Logia>();
+        }
+    }
+
 }
 
