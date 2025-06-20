@@ -9,10 +9,13 @@ import java.util.ArrayList;
 public class GestorReservas {
     private final ArrayList<Reserva> reservas;
     private final Json json = new Json();
+    private final Usuario usuario;
+    private Reserva reservaUsuario;
 
-    public GestorReservas() {
+    public GestorReservas(Usuario usuarioLogueado) {
         reservas = new Json().CargarReservas();
         limpiezaReservasAntiguas();
+        this.usuario = usuarioLogueado;
     }
     public void agregarReserva(Usuario usuario, Logia logia, LocalDateTime fechaHora){
         reservas.add(new Reserva(usuario.getMatricula(), logia, fechaHora));
@@ -26,15 +29,13 @@ public class GestorReservas {
         }
         return null;
     }
+
     private Boolean verificarUsuarioNoTengaReserva(String matricula){
-        for (Reserva r : reservas) {
-            if (r.getMatricula().equals(matricula)) {
-                return false;
-            }
-        }
-        return true;
+        // si no lo pilla es null por lo tanto NO tiene reserva y devuelve verdadero, si lo pilla FALSO
+        return buscarReserva(matricula) == null;
     }
     public void CancelarReserva(Reserva reservaUsuario){
+
         reservas.remove(reservaUsuario);
         json.IngresarReservas(reservas);
     }

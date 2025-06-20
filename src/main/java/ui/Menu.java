@@ -1,13 +1,19 @@
 package ui;
 
 import datos.Usuario;
-import logica.GestorUsuarios;
-
+import logica.GestorReservas;
 import java.util.Scanner;
 
 public class Menu {
-    private static final Scanner sc = new Scanner(System.in);
-    private static Usuario usuarioLogueado;
+    private final Scanner sc = new Scanner(System.in);
+    private GestorReservas gestorReservas;
+    private final Usuario usuarioLogueado;
+
+
+    public Menu(Usuario usuarioLogueado) {
+        this.gestorReservas = new GestorReservas(usuarioLogueado);
+        this.usuarioLogueado = usuarioLogueado;
+    }
 
 
     public void menu() {
@@ -41,13 +47,13 @@ public class Menu {
     }
 
 
-    public static void mostrarOpciones() {
+    public void mostrarOpciones() {
         System.out.println("=============================");
         System.out.println("            RELU            ");
         System.out.println("          Opciones      ");
         System.out.println("============================= ");
-        System.out.println("    [1] Agendar Reserva de Logias");
-        System.out.println("    [2] Eliminar Reserva de Logias");
+        System.out.println("    [1] Agendar Logia");
+        System.out.println("    [2] Eliminar Reserva de Logia");
         System.out.println("    [3] Ver Logias");
         System.out.println("    [4] Cerrar sesión");
         System.out.println("    [5] Salir");
@@ -57,7 +63,7 @@ public class Menu {
         System.out.print("      Opcion: ");
     }
 
-    public static int obtenerOpcion() {
+    public int obtenerOpcion() {
         int opcion;
         try {
             opcion = Integer.parseInt(sc.nextLine());
@@ -67,7 +73,7 @@ public class Menu {
         }
         return opcion;
     }
-    public static void ejecutarOpcion(int opcion) {
+    public void ejecutarOpcion(int opcion) {
         switch (opcion) {
             /* OPCIONES NO IMPLEMENADAS CAMBIANDO TODO EL RATO */
             case 1 -> System.out.println("agendar logia");
@@ -79,7 +85,7 @@ public class Menu {
         }
     }
 
-    public static void mostrarOpcionesDias() {
+    public void mostrarOpcionesDias() {
 
         /* Mostrar días que se pueden reservar Logias */
 
@@ -94,7 +100,7 @@ public class Menu {
 
     // ----- Repetimos misma estructura para horas -----
 
-    public static void mostrarOpcionesHoras() {
+    public void mostrarOpcionesHoras() {
 
         //Menu que muestra todas las horas posibles para reservar */
 
