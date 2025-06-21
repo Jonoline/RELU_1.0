@@ -27,6 +27,22 @@ public enum Horario {
     private int getNumeroBloque() {
         return Integer.parseInt(name().substring(7));
     }
+    public static Horario obtenerHorario(String hora) {
+        for (Horario h : Horario.values()) {
+            if (h.horaInicio.equals(hora) || h.horaFin.equals(hora)) {
+                return h;
+            }
+        }
+        return null;
+    }
+    public static Horario obtenerHorario(int bloque) {
+        for (Horario h : Horario.values()) {
+            if (h.getNumeroBloque() == bloque) {
+                return h;
+            }
+        }
+        return null;
+    }
 
 
     @Override
