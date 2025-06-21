@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Menu {
     private final Scanner sc = new Scanner(System.in);
-    private GestorReservas gestorReservas;
+    private final GestorReservas gestorReservas;
     private final Usuario usuarioLogueado;
 
 
@@ -15,35 +15,27 @@ public class Menu {
         this.usuarioLogueado = usuarioLogueado;
     }
 
+    public void iniciar() {
+        System.out.println("\n=== BIENVENIDO A RELU, " + usuarioLogueado.getUfromail() + " ===");
+        menu();
+    }
 
-    public void menu() {
+        public void menu() {
         int opcion;
+        boolean continuar = true;
         do {
             mostrarOpciones();
             opcion = obtenerOpcion();
             if (opcion == 4) {
-                cerrarSesion();
-                break;
+                System.out.println("Cerrando sesión...");
+                continuar = false;  // Terminar el bucle
+            } else if (opcion == 5) {
+                System.out.println("Saliendo del programa...");
+                System.exit(0);  // Terminar el programa
             } else if (opcion != -1) {
                 ejecutarOpcion(opcion);
             }
-        } while (opcion != 5);
-    }
-
-
-    public void menuiniciarSesion() {
-        System.out.println("===BIENVENIDO A RELU===");
-        while (true) {
-
-            if (usuarioLogueado == null) {
-                System.out.println("❌ Error al iniciar sesión. Saliendo...");
-                return;
-            }
-
-
-            System.out.println("\n=== BIENVENIDO A RELU, " + usuarioLogueado.getUfromail() + " ===");
-            menu();  // Aquí se entra al menú principal
-        }
+        } while (continuar);
     }
 
 
@@ -116,8 +108,5 @@ public class Menu {
                 [8]  16:50-17:50
                 [9]  18:00-19:00""");
     }
-    private void cerrarSesion() {
-        System.out.println("Hasta luego!!");
-        menuiniciarSesion();
-    }
+
 }

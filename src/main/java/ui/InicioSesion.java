@@ -55,7 +55,9 @@ public class InicioSesion {
     }
     private void ejecucionMenuPrincipal(Usuario intento){
         if(intento != null){
-            System.out.println("ejecutar menu");
+            Menu menu = new Menu(intento);
+            menu.iniciar();
+
         } else{
             System.out.println("usted no es parte de la ufro VAYASE");
         }
