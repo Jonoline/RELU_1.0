@@ -86,7 +86,7 @@ public class Menu {
         System.out.println("Ingrese el ID de la logia: ");
         gestorLogias.mostrarLogias();
         String id = sc.nextLine();
-        return gestorLogias.obtenerLogia(id);
+        return gestorLogias.obtenerLogia(id.toUpperCase());
     }
 
     private void manejarAgendarLogia(){
