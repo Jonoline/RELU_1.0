@@ -118,7 +118,4 @@ public class GestorReservas {
         return !fechaPropuesta.isBefore(LocalDateTime.now()) &&
                 verificarLogiaEnFecha(logia, fechaPropuesta);
     }
-
-
-
 }

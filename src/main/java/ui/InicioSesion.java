@@ -43,9 +43,8 @@ public class InicioSesion {
             }
 
             case "2"-> {
-                System.out.println("Saliendo del programa...");
                 json.crearBackups();
-                delay();
+                System.out.println("Saliendo del programa...");
             }
             default -> System.out.println("ingrese una opción valida");
         }
@@ -81,7 +80,9 @@ public class InicioSesion {
     public void delay(int t) {
         try {
             Thread.sleep(t);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void delay(){
         delay(1000);

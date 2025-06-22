@@ -84,7 +84,7 @@ public class Menu {
             }
             case 3 -> {
                 obtenerReserva();
-                delay(5000);
+                delay(4000);
             }
             case 4 -> System.out.println("cerrar sesión");
             case 5 -> System.out.println("Saliendo del programa...");
@@ -93,15 +93,17 @@ public class Menu {
     }
 
     private Logia obtenerLogia(){
-        System.out.println("Ingrese el ID de la logia: ");
         gestorLogias.mostrarLogias();
-        String id = sc.nextLine();
-        return gestorLogias.obtenerLogia(id.toUpperCase());
+        System.out.println("Ingrese el [ID] de la logia: ");
+        String id = sc.nextLine().toUpperCase().trim();
+        Logia logia = gestorLogias.obtenerLogia(id);
+        verificarLogia(logia, id);
+        return logia;
     }
 
     private void manejarAgendarLogia(){
         if (gestorReservas.getReservaUsuario() != null) {
-            System.out.println("Usted ya tiene una reserva activa, para hacer otra debe cancelar la actual.");
+            System.out.println("Usted ya tiene una reserva activa, si desea realizar otra debe cancelar la actual.");
             return;
         }
 
@@ -113,12 +115,14 @@ public class Menu {
             gestorReservas.agregarReserva(logia,FormarFecha(dia,mes,horasYminutos));
             System.out.println("Reserva realizada con éxito");
             } catch (IllegalArgumentException e){
-                System.out.println(e.getMessage());
-            }
+                System.out.println("Error: "+e.getMessage());
+            } catch (Exception e) {
+                System.out.println("Error inesperado");
+        }
     }
 
     private String obtenerMes() {
-        System.out.println("Ingrese el mes de la reserva: ");
+        System.out.println("Ingrese el mes de la reserva como texto (ej:junio): ");
         String mesIngresado = sc.nextLine().trim();
         return Mes.obtenerMes(mesIngresado).getNumeroMes();
     }
@@ -129,7 +133,7 @@ public class Menu {
         try {
             dia = Integer.parseInt(sc.nextLine());
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Ingrese un numero valido");
+            throw new IllegalArgumentException("Se debe ingresar el número del día que desea reservar");
         }
         return dia;
     }
@@ -191,9 +195,22 @@ public class Menu {
     public void delay(int t) {
         try {
             Thread.sleep(t);
-        } catch (InterruptedException e) {}
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void delay(){
         delay(1000);
+    }
+
+    private void verificarLogia(Logia logia, String id){
+        if (logia == null) {
+            throw new IllegalArgumentException("La logia con ID " + id + " no existe");
+        }
+        // Verificar si la logia está habilitada
+        if (!logia.getHabilitada()) {
+            throw new IllegalArgumentException("Error: La logia " + id + " no está habilitada actualmente");
+        }
+
     }
 }

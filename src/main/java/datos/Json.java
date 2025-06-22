@@ -8,11 +8,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-// deben manejarse excepciones, FilenotFound en esoecial creo:V
+
 public class Json {
     //crea gson con saltos de lineas, sangrias y adaptadores par ael localdatetime
     private final Gson gson = JavaTimeUtils.obtenerGsonConTiempo();
-    private final String ARCHIVO_USUARIOS = "data/usuarios.json";
     private final String ARCHIVO_RESERVAS = "data/reservas.json";
     private final String ARCHIVO_LOGIAS = "data/logias.json";
     private final String BACKUP_USUARIOS = "backup/usuariosBackup.json";
@@ -24,18 +23,16 @@ public class Json {
         File archivo = new File(archivoOriginal);
         File backup = new File(archivoBackup);
         ArrayList<T> datos;
-
         try {
             if (archivo.exists()) {
                 datos = leerArchivo(archivoOriginal, typeToken);
             } else if (backup.exists()) {
+                verificarDirectorioData();
                 // Si existe el backup pero no el original, cargamos del backup
                 datos = leerArchivo(archivoBackup, typeToken);
                 // Creamos el archivo original a partir del backup
-                try (FileWriter escritor = new FileWriter(archivoOriginal)) {
-                    gson.toJson(datos, escritor);
-                    System.out.println("Se ha restaurado " + archivoOriginal + " desde el backup");
-                }
+                escribirArchivo(archivoOriginal, datos);
+                datos = leerArchivo(archivoOriginal, typeToken);
             } else {
                 throw new RuntimeException("No se encontró el archivo " + archivoOriginal + " ni su respaldo");
             }
@@ -44,15 +41,21 @@ public class Json {
             throw new RuntimeException("Error al leer/escribir el archivo: " + e.getMessage());
         }
     }
-
-
     private <T> ArrayList<T> leerArchivo(String rutaArchivo, TypeToken<ArrayList<T>> typeToken) throws IOException {
         try (FileReader lector = new FileReader(rutaArchivo)) {
             return gson.fromJson(lector, typeToken.getType());
         }
     }
+    private <T> void escribirArchivo(String rutaArchivo, ArrayList<T> datos) throws IOException {
+        try (FileWriter escritor = new FileWriter(rutaArchivo)) {
+            gson.toJson(datos, escritor);
+        } catch (IOException e) {
+            throw new RuntimeException("Error al leer/escribir el archivo: " + e.getMessage());
+        }
+    }
 
     public ArrayList<Usuario> cargarUsuarioJson() {
+        String ARCHIVO_USUARIOS = "data/usuarios.json";
         return cargarArchivoGenerico(
                 ARCHIVO_USUARIOS,
                 BACKUP_USUARIOS,
@@ -86,14 +89,14 @@ public class Json {
         }
     }
 
-    //public void ingresarLogias(ArrayList<Logia> logias) {
-       // try (FileWriter escritor = new FileWriter(ARCHIVO_LOGIAS)) {
-          //  gson.toJson(logias, escritor);
-        //    System.out.println("Logias guardadas");
-       // } catch (IOException e) {
-        //    System.out.println("Error al guardar las logias en el archivo JSON");
-      //  }
-    //}
+    public void ingresarLogias(ArrayList<Logia> logias) {
+       try (FileWriter escritor = new FileWriter(ARCHIVO_LOGIAS)) {
+           gson.toJson(logias, escritor);
+            System.out.println("Logias guardadas");
+        } catch (IOException e) {
+            System.out.println("Error al guardar las logias en el archivo JSON");
+        }
+    }
 
     private <T> void crearBackupGenerico(String archivoBackup, ArrayList<T> datos) { //<T> es para usar cualquier tipo de dato entrante, locura
         File directorioBackup = new File("backup");
@@ -106,6 +109,12 @@ public class Json {
             //System.out.println("Archivo de respaldo creado: " + archivoBackup); no creo que sea necesario pero ahi esta para debugging
         } catch (IOException e) {
             throw new RuntimeException("Error al crear el archivo de respaldo: " + e.getMessage());
+        }
+    }
+    private void verificarDirectorioData(){
+        File directorioData = new File("data");
+        if (!directorioData.exists()) {
+            directorioData.mkdir();
         }
     }
 
