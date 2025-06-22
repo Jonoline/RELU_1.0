@@ -110,7 +110,7 @@ public class Json {
     }
 
 
-    public void crearBackupUsuarios() {
+    private void crearBackupUsuarios() {
         try {
             ArrayList<Usuario> usuarios = cargarUsuarioJson();
             crearBackupGenerico(BACKUP_USUARIOS, usuarios);
@@ -119,7 +119,7 @@ public class Json {
         }
     }
 
-    public void crearBackupLogias() {
+    private void crearBackupLogias() {
         try {
             ArrayList<Logia> logias = cargarLogias();
             crearBackupGenerico(BACKUP_LOGIAS, logias);
@@ -128,7 +128,7 @@ public class Json {
         }
     }
 
-    public void crearBackupReservas() {
+    private void crearBackupReservas() {
         try {
             ArrayList<Reserva> reservas = cargarReservas();
             crearBackupGenerico(BACKUP_RESERVAS, reservas);
