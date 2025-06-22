@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 // deben manejarse excepciones, FilenotFound en esoecial creo:V
 public class Json {
@@ -87,14 +86,14 @@ public class Json {
         }
     }
 
-    public void ingresarLogias(ArrayList<Logia> logias) {
-        try (FileWriter escritor = new FileWriter(ARCHIVO_LOGIAS)) {
-            gson.toJson(logias, escritor);
-            System.out.println("Logias guardadas");
-        } catch (IOException e) {
-            System.out.println("Error al guardar las logias en el archivo JSON");
-        }
-    }
+    //public void ingresarLogias(ArrayList<Logia> logias) {
+       // try (FileWriter escritor = new FileWriter(ARCHIVO_LOGIAS)) {
+          //  gson.toJson(logias, escritor);
+        //    System.out.println("Logias guardadas");
+       // } catch (IOException e) {
+        //    System.out.println("Error al guardar las logias en el archivo JSON");
+      //  }
+    //}
 
     private <T> void crearBackupGenerico(String archivoBackup, ArrayList<T> datos) { //<T> es para usar cualquier tipo de dato entrante, locura
         File directorioBackup = new File("backup");
