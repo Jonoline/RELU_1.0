@@ -209,7 +209,7 @@ public class Menu {
         }
         // Verificar si la logia está habilitada
         if (!logia.getHabilitada()) {
-            throw new IllegalArgumentException("Error: La logia " + id + " no está habilitada actualmente");
+            throw new IllegalArgumentException("La logia " + id + " no está habilitada actualmente");
         }
 
     }
