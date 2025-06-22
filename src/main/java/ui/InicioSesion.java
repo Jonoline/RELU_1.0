@@ -39,11 +39,13 @@ public class InicioSesion {
                 GestorUsuarios gestorUsuarios = new GestorUsuarios();
                 Usuario intento = gestorUsuarios.iniciarSesion(pedirDatosLogin());
                 ejecucionMenuPrincipal(intento);
+                delay();
             }
 
             case "2"-> {
                 System.out.println("Saliendo del programa...");
                 json.crearBackups();
+                delay();
             }
             default -> System.out.println("ingrese una opción valida");
         }
@@ -75,6 +77,14 @@ public class InicioSesion {
     private String obtenerContrasenia(){
         System.out.println("Ingrese su contraseña: ");
         return sc.nextLine();
+    }
+    public void delay(int t) {
+        try {
+            Thread.sleep(t);
+        } catch (InterruptedException e) {}
+    }
+    public void delay(){
+        delay(1000);
     }
 }
 

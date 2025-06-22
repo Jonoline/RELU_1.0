@@ -73,9 +73,19 @@ public class Menu {
     public void ejecutarOpcion(int opcion) {
         switch (opcion) {
             /* OPCIONES NO IMPLEMENADAS CAMBIANDO TODO EL RATO */
-            case 1 -> manejarAgendarLogia();
-            case 2 -> cancelarReserva();
-            case 3 -> obtenerReserva();
+            case 1 -> {
+                manejarAgendarLogia();
+                delay(2000);
+
+            }
+            case 2 -> {
+                cancelarReserva();
+                delay();
+            }
+            case 3 -> {
+                obtenerReserva();
+                delay(5000);
+            }
             case 4 -> System.out.println("cerrar sesión");
             case 5 -> System.out.println("Saliendo del programa...");
             default -> System.out.println("Opción inválida...");
@@ -90,6 +100,11 @@ public class Menu {
     }
 
     private void manejarAgendarLogia(){
+        if (gestorReservas.getReservaUsuario() != null) {
+            System.out.println("Usted ya tiene una reserva activa, para hacer otra debe cancelar la actual.");
+            return;
+        }
+
         try{
             int dia = obtenerDia();
             String mes = obtenerMes();
@@ -171,5 +186,14 @@ public class Menu {
         } else {
             System.out.println("Usted no tiene una reserva activa");
         }
+    }
+
+    public void delay(int t) {
+        try {
+            Thread.sleep(t);
+        } catch (InterruptedException e) {}
+    }
+    public void delay(){
+        delay(1000);
     }
 }
