@@ -1,0 +1,22 @@
+[
+  {
+    "matricula": "21717876223",
+    "logia": {
+      "ID": "L10",
+      "capacidad": 4,
+      "piso": "P3",
+      "habilitada": true
+    },
+    "fechaHora": "08:30 - 10:00 | 22/06/25"
+  },
+  {
+    "matricula": "21797495k23",
+    "logia": {
+      "ID": "L3",
+      "capacidad": 6,
+      "piso": "P2",
+      "habilitada": true
+    },
+    "fechaHora": "13:00 - 14:30 | 23/07/25"
+  }
+]

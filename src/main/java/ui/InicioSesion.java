@@ -59,7 +59,7 @@ public class InicioSesion {
             menu.iniciar();
 
         } else{
-            System.out.println("usted no es parte de la ufro VAYASE");
+            System.out.println("No se ha encontrado el usuario en el sistema.");
         }
 
     }

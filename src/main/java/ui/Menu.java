@@ -1,22 +1,25 @@
 package ui;
 
-import datos.Usuario;
+import java.time.LocalDateTime;
+import datos.*;
+import logica.GestorLogias;
 import logica.GestorReservas;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Menu {
     private final Scanner sc = new Scanner(System.in);
     private final GestorReservas gestorReservas;
-    private final Usuario usuarioLogueado;
+    private final GestorLogias gestorLogias = new GestorLogias();
 
 
     public Menu(Usuario usuarioLogueado) {
         this.gestorReservas = new GestorReservas(usuarioLogueado);
-        this.usuarioLogueado = usuarioLogueado;
     }
 
     public void iniciar() {
-        System.out.println("\n=== BIENVENIDO A RELU, " + usuarioLogueado.getUfromail() + " ===");
+        System.out.println("\n=== BIENVENIDO A RELU ===  ");
         menu();
     }
 
@@ -46,7 +49,7 @@ public class Menu {
         System.out.println("============================= ");
         System.out.println("    [1] Agendar Logia");
         System.out.println("    [2] Eliminar Reserva de Logia");
-        System.out.println("    [3] Ver Logias");
+        System.out.println("    [3] Ver Reserva actual de Logia");
         System.out.println("    [4] Cerrar sesión");
         System.out.println("    [5] Salir");
 
@@ -68,45 +71,95 @@ public class Menu {
     public void ejecutarOpcion(int opcion) {
         switch (opcion) {
             /* OPCIONES NO IMPLEMENADAS CAMBIANDO TODO EL RATO */
-            case 1 -> System.out.println("agendar logia");
-            case 2 -> System.out.println("ver detalle");
-            case 3 -> System.out.println("cancelar reserva");
+            case 1 -> manejarAgendarLogia();
+            case 2 -> cancelarReserva();
+            case 3 -> System.out.println("\n"+ gestorReservas.getReservaUsuario() +"\n");
             case 4 -> System.out.println("cerrar sesión");
             case 5 -> System.out.println("Saliendo del programa...");
             default -> System.out.println("Opción inválida...");
         }
     }
 
-    public void mostrarOpcionesDias() {
-
-        /* Mostrar días que se pueden reservar Logias */
-
-        System.out.println("📅 Seleccione un día:");
-        System.out.println("[1] Lunes");
-        System.out.println("[2] Martes");
-        System.out.println("[3] Miércoles");
-        System.out.println("[4] Jueves");
-        System.out.println("[5] Viernes");
+    private Logia obtenerLogia(){
+        System.out.println("Ingrese el ID de la logia: ");
+        gestorLogias.mostrarLogias();
+        String id = sc.nextLine();
+        return gestorLogias.obtenerLogia(id);
     }
 
-
-    // ----- Repetimos misma estructura para horas -----
-
-    public void mostrarOpcionesHoras() {
-
-        //Menu que muestra todas las horas posibles para reservar */
-
-        System.out.println("🕒 Seleccione un horario:");
-        System.out.println("""
-                [1]   8:30-9:30
-                [2]   9:40-10:40
-                [3]  10:50-11:50
-                [4]  12:00-13:00
-                [5]  13:10-14:10
-                [6]  14:30-15:30
-                [7]  15:40-16:40
-                [8]  16:50-17:50
-                [9]  18:00-19:00""");
+    private void manejarAgendarLogia(){
+        try{
+            int dia = obtenerDia();
+            String mes = obtenerMes();
+            Logia logia = obtenerLogia();
+            Integer[] horasYminutos = formarHorasYminutos(obtenerHora(logia,dia,mes));
+            gestorReservas.agregarReserva(logia,FormarFecha(dia,mes,horasYminutos));
+            System.out.println("Reserva realizada con éxito");
+            } catch (IllegalArgumentException e){
+                System.out.println(e.getMessage());
+            }
     }
 
+    private String obtenerMes() {
+        System.out.println("Ingrese el mes de la reserva: ");
+        String mesIngresado = sc.nextLine().trim();
+        return Mes.obtenerMes(mesIngresado).getNumeroMes();
+    }
+
+    private int obtenerDia(){
+        System.out.println("Ingrese el dia de la reserva: ");
+        int dia;
+        try {
+            dia = Integer.parseInt(sc.nextLine());
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Ingrese un numero valido");
+        }
+        return dia;
+    }
+
+    private String obtenerHora(Logia logia, int dia, String mes){
+        System.out.println("🕒 Bloques horarios disponibles:");
+        ArrayList<Horario> bloquesDisponibles = gestorReservas.obtenerBloquesDisponibles(logia, dia, mes);
+        if (bloquesDisponibles.isEmpty()) {
+            throw new IllegalArgumentException("No hay bloques horarios disponibles para esta logia en la fecha seleccionada");
+        }
+        for (Horario h : bloquesDisponibles) {
+            System.out.println(h.toString());
+        }
+        int bloque;
+        try {
+            bloque = Integer.parseInt(sc.nextLine());
+            Horario horarioSeleccionado = Horario.obtenerHorario(bloque);
+            if (horarioSeleccionado == null || !bloquesDisponibles.contains(horarioSeleccionado)) {
+                throw new IllegalArgumentException("Bloque no válido");
+            }
+            return horarioSeleccionado.getHoraInicio();
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Ingrese un número válido");
+        }
+    }
+
+    private Integer[] formarHorasYminutos(String horaInicio){
+        Integer[] partes = new Integer[2];
+        String[] partesHora = horaInicio.split(":");
+        partes[0] = Integer.parseInt(partesHora[0]);
+        partes[1] = Integer.parseInt(partesHora[1]);
+        return partes;
+    }
+
+    private LocalDateTime FormarFecha(int dia, String mes, Integer[] horasYminutos){
+        LocalDateTime fecha = LocalDateTime.of(LocalDateTime.now().getYear(), Integer.parseInt(mes), dia, horasYminutos[0],horasYminutos[1]);
+        if (fecha.isBefore(LocalDateTime.now())){
+            throw new IllegalArgumentException("La fecha seleccionada no puede ser anterior a la fecha actual");
+        }
+        return fecha;
+    }
+
+    private void cancelarReserva(){
+        if (gestorReservas.CancelarReserva()){
+            System.out.println("Reserva cancelada");
+        }else {
+            System.out.println("Usted no tiene una reserva activa");
+        }
+    }
 }

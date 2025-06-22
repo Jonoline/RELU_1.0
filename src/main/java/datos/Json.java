@@ -26,7 +26,6 @@ public class Json {
     public void IngresarReservas(ArrayList<Reserva> reservas){
         try (FileWriter escritor = new FileWriter("reservas.json")){
             gson.toJson(reservas, escritor);
-            System.out.println("Reservas guardadas");
         } catch (IOException e) {
             System.out.println("Error al guardar las reservas en el archivo JSON");
         }

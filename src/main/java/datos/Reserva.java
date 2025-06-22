@@ -5,13 +5,11 @@ public class Reserva {
 
     private final String matricula;
     private final Logia logia;
-    private final int capacidad;
     private final LocalDateTime fechaHora;
 
     public Reserva(String matricula, Logia logia, LocalDateTime fechaHora) {
         this.matricula = matricula;
         this.logia = logia;
-        this.capacidad = logia.getCapacidad();
         this.fechaHora = fechaHora;
     }
 
@@ -27,16 +25,24 @@ public class Reserva {
         return fechaHora;
     }
 
-    public int getCapacidad() {
-        return capacidad;
-    }
 
     @Override
     public String toString() {
-        return "Reserva{" +
-                "matricula=" + matricula + '\n' +
-                ", logia=" + logia + "\n" +
-                ", fechaHora= " + JavaTimeUtils.formatearConHoraFinal(fechaHora) +
-                '}';
+        return """
+           =============================
+                    RESERVA
+           =============================
+           📝 Matrícula: %s
+           🏢 Logia: %s
+           👥 Capacidad: %d personas
+           📍 Piso: %s
+           🕒 Fecha y Hora: %s
+           ============================="""
+                .formatted(matricula,
+                        logia.getID(),
+                        logia.getCapacidad(),
+                        logia.getPiso(),
+                        JavaTimeUtils.formatearConHoraFinal(fechaHora));
     }
+
 }

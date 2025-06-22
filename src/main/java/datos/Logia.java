@@ -1,5 +1,7 @@
 package datos;
 
+import java.util.Objects;
+
 public class Logia {
     private String ID;
     private int capacidad;
@@ -37,8 +39,20 @@ public class Logia {
         this.habilitada = habilitada;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Logia logia = (Logia) o;
+        return ID.equals(logia.ID);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ID);
+    }
+
     public String toString() {
-        return "logia " + getID() + " con capacidad: " + getCapacidad() +" en el piso: "+ getPiso()
-                + " estado: "+ getHabilitada();
+        return "logia " + getID() + " con capacidad: " + getCapacidad() +" en el piso: "+ getPiso();
     }
 }
