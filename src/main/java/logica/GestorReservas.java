@@ -11,7 +11,7 @@ public class GestorReservas {
 
 
     public GestorReservas(Usuario usuarioLogueado) {
-        reservas = new Json().CargarReservas();
+        reservas = new Json().cargarReservas();
         limpiezaReservasAntiguas();
         this.usuario = usuarioLogueado;
         this.reservaUsuario = buscarReserva(usuarioLogueado.getMatricula());
