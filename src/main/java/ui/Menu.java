@@ -86,7 +86,7 @@ public class Menu {
                 obtenerReserva();
                 delay(4000);
             }
-            case 4 -> System.out.println("cerrar sesión");
+            case 4 -> System.out.println("Cerrar sesión");
             case 5 -> System.out.println("Saliendo del programa...");
             default -> System.out.println("Opción inválida...");
         }
@@ -128,7 +128,7 @@ public class Menu {
     }
 
     private int obtenerDia(){
-        System.out.println("Ingrese el dia de la reserva: ");
+        System.out.println("Ingrese el número del dia de la reserva (ej: 2): ");
         int dia;
         try {
             dia = Integer.parseInt(sc.nextLine());
