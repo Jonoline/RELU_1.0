@@ -75,7 +75,7 @@ public class Menu {
             /* OPCIONES NO IMPLEMENADAS CAMBIANDO TODO EL RATO */
             case 1 -> manejarAgendarLogia();
             case 2 -> cancelarReserva();
-            case 3 -> System.out.println("\n"+ gestorReservas.getReservaUsuario() +"\n");
+            case 3 -> obtenerReserva();
             case 4 -> System.out.println("cerrar sesión");
             case 5 -> System.out.println("Saliendo del programa...");
             default -> System.out.println("Opción inválida...");
@@ -160,6 +160,14 @@ public class Menu {
     private void cancelarReserva() {
         if (gestorReservas.CancelarReserva()) {
             System.out.println("Reserva cancelada");
+        } else {
+            System.out.println("Usted no tiene una reserva activa");
+        }
+    }
+
+    private void obtenerReserva(){
+        if (gestorReservas.getReservaUsuario() != null){
+            System.out.println(gestorReservas.getReservaUsuario());
         } else {
             System.out.println("Usted no tiene una reserva activa");
         }
