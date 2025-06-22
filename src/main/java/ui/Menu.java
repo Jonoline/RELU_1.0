@@ -35,7 +35,7 @@ public class Menu {
                 continuar = false;  // Terminar el bucle
             } else if (opcion == 5) {
                 System.out.println("Saliendo del programa...");
-                json.crearBackupUsuarios();
+                json.crearBackups();
                 System.exit(0);  // Terminar el programa
             } else if (opcion != -1) {
                 ejecutarOpcion(opcion);

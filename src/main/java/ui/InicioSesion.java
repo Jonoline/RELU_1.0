@@ -43,7 +43,7 @@ public class InicioSesion {
 
             case "2"-> {
                 System.out.println("Saliendo del programa...");
-                json.crearBackupUsuarios();
+                json.crearBackups();
             }
             default -> System.out.println("ingrese una opción valida");
         }
