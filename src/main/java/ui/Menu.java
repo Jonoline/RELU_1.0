@@ -12,6 +12,7 @@ public class Menu {
     private final Scanner sc = new Scanner(System.in);
     private final GestorReservas gestorReservas;
     private final GestorLogias gestorLogias = new GestorLogias();
+    private final Json json = new Json();
 
 
     public Menu(Usuario usuarioLogueado) {
@@ -34,6 +35,7 @@ public class Menu {
                 continuar = false;  // Terminar el bucle
             } else if (opcion == 5) {
                 System.out.println("Saliendo del programa...");
+                json.crearBackupUsuarios();
                 System.exit(0);  // Terminar el programa
             } else if (opcion != -1) {
                 ejecutarOpcion(opcion);
@@ -155,10 +157,10 @@ public class Menu {
         return fecha;
     }
 
-    private void cancelarReserva(){
-        if (gestorReservas.CancelarReserva()){
+    private void cancelarReserva() {
+        if (gestorReservas.CancelarReserva()) {
             System.out.println("Reserva cancelada");
-        }else {
+        } else {
             System.out.println("Usted no tiene una reserva activa");
         }
     }

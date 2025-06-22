@@ -1,4 +1,5 @@
 package ui;
+import datos.Json;
 import datos.Usuario;
 import logica.GestorUsuarios;
 
@@ -6,6 +7,7 @@ import java.util.Scanner;
 
 public class InicioSesion {
     Scanner sc = new Scanner(System.in);
+    private final Json json = new Json();
 
 
     public void menu() {
@@ -39,7 +41,10 @@ public class InicioSesion {
                 ejecucionMenuPrincipal(intento);
             }
 
-            case "2"-> System.out.println("Saliendo del programa...");
+            case "2"-> {
+                System.out.println("Saliendo del programa...");
+                json.crearBackupUsuarios();
+            }
             default -> System.out.println("ingrese una opción valida");
         }
     }
