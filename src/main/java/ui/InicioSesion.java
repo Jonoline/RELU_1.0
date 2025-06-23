@@ -1,6 +1,7 @@
 package ui;
 import datos.Json;
 import datos.Usuario;
+import logica.GestorReservas;
 import logica.GestorUsuarios;
 
 import java.util.Scanner;

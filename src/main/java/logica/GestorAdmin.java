@@ -21,12 +21,16 @@ public class GestorAdmin {
         gestorReservas.agregarReservaAdmin(usuario, logia, fechaHora);
     }
 
-    public Reserva buscarReservaDeUsuario(String matricula) {
+    public Reserva buscarReserva(String matricula) {
         return gestorReservas.buscarReserva(matricula);
     }
 
-    public boolean cancelarReservaDeUsuario(Usuario usuario) {
+    public boolean CancelarReserva(Usuario usuario) {
         return gestorReservas.CancelarReserva(usuario);
+    }
+
+    public void eliminarUsuario(String matricula) {
+
     }
 
     // Métodos de gestión de logias

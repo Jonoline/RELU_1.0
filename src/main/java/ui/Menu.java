@@ -13,9 +13,11 @@ public class Menu {
     private final GestorReservas gestorReservas;
     private final GestorLogias gestorLogias = new GestorLogias();
     private final Json json = new Json();
+    private final Usuario usuarioLogueado;
 
 
     public Menu(Usuario usuarioLogueado) {
+        this.usuarioLogueado = usuarioLogueado; // <--- AÑADE ESTA LÍNEA
         this.gestorReservas = new GestorReservas(usuarioLogueado);
     }
 
@@ -176,10 +178,11 @@ public class Menu {
     }
 
     private void cancelarReserva() {
-        if (gestorReservas.CancelarReserva()) {
-            System.out.println("Reserva cancelada");
+        // Usa el atributo 'usuarioLogueado' que ahora está guardado en esta clase
+        if (this.gestorReservas.CancelarReserva(this.usuarioLogueado)) {
+            System.out.println("Reserva cancelada correctamente.");
         } else {
-            System.out.println("Usted no tiene una reserva activa");
+            System.out.println("No se encontró una reserva activa para usted o no se pudo cancelar.");
         }
     }
 
