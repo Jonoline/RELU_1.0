@@ -3,9 +3,9 @@ package datos;
 import java.util.Objects;
 
 public class Logia {
-    private String ID;
-    private int capacidad;
-    private String piso;
+    private final String ID;
+    private final int capacidad;
+    private final String piso;
     private Boolean habilitada = true;
 
     public Logia(String ID, int capacidad, String piso){

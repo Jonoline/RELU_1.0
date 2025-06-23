@@ -95,15 +95,6 @@ public class GestorAdmin {
         json.ingresarUsuarios(usuarios);
     }
 
-    public void mostrarUsuarios() {
-        System.out.println("\nLista de Usuarios:");
-        System.out.println("------------------");
-        for (Usuario u : gestorUsuarios.getListaUsuarios()) {
-            System.out.println("Matrícula: " + u.getMatricula());
-            System.out.println("Correo: " + u.getUfromail());
-            System.out.println("------------------");
-        }
-    }
 
 
 

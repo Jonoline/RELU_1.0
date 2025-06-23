@@ -20,20 +20,8 @@ public enum Horario {
     public String getHoraInicio() {
         return horaInicio;
     }
-
-    public String getHoraFin() {
-        return horaFin;
-    }
     private int getNumeroBloque() {
         return Integer.parseInt(name().substring(7));
-    }
-    public static Horario obtenerHorario(String hora) {
-        for (Horario h : Horario.values()) {
-            if (h.horaInicio.equals(hora) || h.horaFin.equals(hora)) {
-                return h;
-            }
-        }
-        return null;
     }
     public static Horario obtenerHorario(int bloque) {
         for (Horario h : Horario.values()) {
@@ -43,7 +31,6 @@ public enum Horario {
         }
         return null;
     }
-
 
     @Override
     public String toString() {

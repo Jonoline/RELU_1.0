@@ -26,10 +26,6 @@ public class Usuario {
         return matricula;
     }
 
-    public String getContrasena() {
-        return contrasena;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;

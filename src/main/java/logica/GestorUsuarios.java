@@ -41,9 +41,6 @@ public class GestorUsuarios {
     public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
-    public void agregarUsuario(Usuario usuario) {
-        listaUsuarios.add(usuario);
-    }
     public void eliminarUsuario(Usuario usuario) {
         listaUsuarios.remove(usuario);
     }
