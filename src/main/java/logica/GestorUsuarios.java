@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 
 public class GestorUsuarios {
+
     private final ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
     public GestorUsuarios() {
@@ -23,6 +24,22 @@ public class GestorUsuarios {
         }
         System.out.println("Matrícula o contraseña incorrecta. Intente nuevamente.\n");
         return null;
+    }
+    public Usuario buscarUsuario(String matricula){
+        for (Usuario u : listaUsuarios) {
+            if (u.getMatricula().equals(matricula)) {
+                return u;
+            }
+        }
+        throw new IllegalArgumentException("No se ha encontrado el usuario en el sistema.");
+    }
+    public ArrayList<Usuario> getListaUsuarios() {
+        return listaUsuarios;
+    }
+
+    public boolean usuarioEsAdmin(Usuario usuario){
+        return usuario.getUfromail().endsWith("@ufroadmin.cl");
+
     }
 }
 

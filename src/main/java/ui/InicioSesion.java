@@ -8,6 +8,7 @@ import java.util.Scanner;
 public class InicioSesion {
     Scanner sc = new Scanner(System.in);
     private final Json json = new Json();
+    private final GestorUsuarios gestorUsuarios = new GestorUsuarios();
 
 
     public void menu() {
@@ -36,7 +37,6 @@ public class InicioSesion {
     private void ejecutarOpcion(String opcion) {
         switch (opcion){
             case "1"-> {
-                GestorUsuarios gestorUsuarios = new GestorUsuarios();
                 Usuario intento = gestorUsuarios.iniciarSesion(pedirDatosLogin());
                 ejecucionMenuPrincipal(intento);
                 delay();
@@ -60,13 +60,7 @@ public class InicioSesion {
         return new Usuario(matricula, contrasena); // correo vacío porque no es necesario para login
     }
     private void ejecucionMenuPrincipal(Usuario intento){
-        if(intento != null){
-            Menu menu = new Menu(intento);
-            menu.iniciar();
-
-        } else{
-            System.out.println("No se ha encontrado el usuario en el sistema.");
-        }
+        verificacionInicioSesion(intento);
 
     }
     private String obtenerUsuario(){
@@ -86,6 +80,21 @@ public class InicioSesion {
     }
     public void delay(){
         delay(1000);
+    }
+
+    private void verificacionInicioSesion(Usuario intento) {
+        if (intento == null) {
+            System.out.println("No se ha encontrado el usuario en el sistema.");
+            return;
+        }
+
+        if (gestorUsuarios.usuarioEsAdmin(intento)) {
+            System.out.println("Bienvenido administrador RELU");
+            new MenuAdmin(intento).iniciar();
+            return;
+        }
+
+        new Menu(intento).iniciar();
     }
 }
 

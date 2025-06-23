@@ -98,6 +98,16 @@ public class Json {
         }
     }
 
+    public void ingresarUsuarios(ArrayList<Usuario> usuarios) {
+        String ARCHIVO_USUARIOS = "data/usuarios.json";
+        try (FileWriter escritor = new FileWriter(ARCHIVO_USUARIOS)) {
+            gson.toJson(usuarios, escritor);
+            System.out.println("Usuarios guardados correctamente");
+        } catch (IOException e) {
+            System.out.println("Error al guardar los usuarios en el archivo JSON");
+        }
+    }
+
     private <T> void crearBackupGenerico(String archivoBackup, ArrayList<T> datos) { //<T> es para usar cualquier tipo de dato entrante, locura
         File directorioBackup = new File("backup");
         if (!directorioBackup.exists()) {

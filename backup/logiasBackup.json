@@ -63,7 +63,7 @@
     "ID": "L11",
     "capacidad": 4,
     "piso": "P3",
-    "habilitada": true
+    "habilitada": false
   },
   {
     "ID": "L12",
@@ -75,7 +75,7 @@
     "ID": "L13",
     "capacidad": 4,
     "piso": "P3",
-    "habilitada": true
+    "habilitada": false
   },
   {
     "ID": "L14",
@@ -87,12 +87,12 @@
     "ID": "L15",
     "capacidad": 4,
     "piso": "P3",
-    "habilitada": true
+    "habilitada": false
   },
   {
     "ID": "L16",
     "capacidad": 4,
     "piso": "P3",
-    "habilitada": true
+    "habilitada": false
   }
 ]

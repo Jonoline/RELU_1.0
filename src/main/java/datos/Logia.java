@@ -8,12 +8,12 @@ public class Logia {
     private String piso;
     private Boolean habilitada = true;
 
-    Logia(String ID, int capacidad, String piso){
+    public Logia(String ID, int capacidad, String piso){
     this.ID = ID;
     this.capacidad = capacidad;
     this.piso = piso;
 }
-    Logia(String ID, int capacidad, String piso, Boolean habilitada){
+    public Logia(String ID, int capacidad, String piso, Boolean habilitada){
         this.ID = ID;
         this.capacidad = capacidad;
         this.piso = piso;

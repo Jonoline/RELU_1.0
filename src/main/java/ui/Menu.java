@@ -72,7 +72,6 @@ public class Menu {
     }
     public void ejecutarOpcion(int opcion) {
         switch (opcion) {
-            /* OPCIONES NO IMPLEMENADAS CAMBIANDO TODO EL RATO */
             case 1 -> {
                 manejarAgendarLogia();
                 delay(2000);

@@ -62,7 +62,7 @@ public class GestorReservas {
         }
     }
 
-    private boolean verificarLogiaEnFecha(Logia logia, LocalDateTime fechaHora){
+    public boolean verificarLogiaEnFecha(Logia logia, LocalDateTime fechaHora){
         for (Reserva r : reservas) {
             if (r.getLogia().equals(logia) && r.getFechaHora().equals(fechaHora)) {
                 return false;
