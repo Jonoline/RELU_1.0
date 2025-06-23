@@ -102,7 +102,7 @@ public class Json {
         String ARCHIVO_USUARIOS = "data/usuarios.json";
         try (FileWriter escritor = new FileWriter(ARCHIVO_USUARIOS)) {
             gson.toJson(usuarios, escritor);
-            System.out.println("Usuarios guardados correctamente");
+            System.out.println("Base de datos de usuario actualizada correctamente");
         } catch (IOException e) {
             System.out.println("Error al guardar los usuarios en el archivo JSON");
         }

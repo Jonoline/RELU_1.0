@@ -7,14 +7,15 @@ import java.util.ArrayList;
 
 public class GestorAdmin {
     private final GestorUsuarios gestorUsuarios = new GestorUsuarios();
-    private final GestorReservas gestorReservas = new GestorReservas(null);
+    private final GestorReservas gestorReservas ;
     private final ArrayList<Reserva> reservas;
     private final Json json = new Json();
 
 
 
-    public GestorAdmin(Usuario usuarioLogueado) {
-        reservas = new Json().cargarReservas();
+    public GestorAdmin() {
+        this.reservas = new Json().cargarReservas();
+        this.gestorReservas = new GestorReservas();
     }
 
 
@@ -60,8 +61,8 @@ public class GestorAdmin {
         // Crear y agregar el nuevo usuario
         Usuario nuevoUsuario = new Usuario(ufromail, matricula, contrasena);
         usuarios.add(nuevoUsuario);
+        gestorUsuarios.agregarUsuario(nuevoUsuario);
         json.ingresarUsuarios(usuarios);
-        System.out.println("Usuario agregado correctamente");
     }
     private void verificacionesUsuario(ArrayList<Usuario> usuarios, String matricula, String ufromail, String contrasena){
         // Validar que la matrícula no exista
@@ -87,9 +88,10 @@ public class GestorAdmin {
 
     public void eliminarUsuario(String matricula) throws IllegalArgumentException {
         ArrayList<Usuario> usuarios = gestorUsuarios.getListaUsuarios();
-        usuarios.remove(gestorUsuarios.buscarUsuario(matricula));
+        Usuario usuario = gestorUsuarios.buscarUsuario(matricula);
+        usuarios.remove(usuario);
+        gestorUsuarios.eliminarUsuario(usuario);
         json.ingresarUsuarios(usuarios);
-        System.out.println("Usuario eliminado correctamente");
     }
 
     public void mostrarUsuarios() {

@@ -17,6 +17,13 @@ public class GestorReservas {
         this.reservaUsuario = buscarReserva(usuarioLogueado.getMatricula());
     }
 
+    public GestorReservas() {
+        reservas = new Json().cargarReservas();
+        limpiezaReservasAntiguas();
+        this.usuario = null;
+        this.reservaUsuario = null;
+    }
+
     public Reserva getReservaUsuario() {
         return reservaUsuario;
     }
@@ -63,6 +70,9 @@ public class GestorReservas {
     }
 
     public boolean verificarLogiaEnFecha(Logia logia, LocalDateTime fechaHora){
+        if (logia == null || fechaHora == null) {
+            throw new IllegalArgumentException("Logia o fecha no puede ser nulo");
+        }
         for (Reserva r : reservas) {
             if (r.getLogia().equals(logia) && r.getFechaHora().equals(fechaHora)) {
                 return false;

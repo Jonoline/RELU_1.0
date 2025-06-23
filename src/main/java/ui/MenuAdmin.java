@@ -3,7 +3,6 @@ package ui;
 import java.time.LocalDateTime;
 import datos.*;
 import logica.*;
-import ui.Menu;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -19,7 +18,7 @@ public class MenuAdmin {
 
     public MenuAdmin(Usuario usuarioLogueado) {
         this.gestorReservas = new GestorReservas(usuarioLogueado);
-        this.gestoradmin = new GestorAdmin(usuarioLogueado);
+        this.gestoradmin = new GestorAdmin();
     }
 
     public void iniciar() {
@@ -113,12 +112,11 @@ public class MenuAdmin {
 
 
     private void manejarAgendarLogia(){
-        if (gestorReservas.getReservaUsuario() != null) {
-            System.out.println("Usuario ya tiene una reserva activa, si desea realizar otra debe cancelar la actual.");
-            return;
-        }
         try{
             String matricula = obtenerMatricula();
+            if (gestoradmin.buscarReserva(matricula) != null) {
+                throw new IllegalArgumentException("El usuario ya tiene una reserva activa");
+            }
             Usuario usuario = gestorUsuarios.buscarUsuario(matricula);
             int dia = obtenerDia();
             String mes = obtenerMes();
@@ -241,8 +239,8 @@ public class MenuAdmin {
 
     private String obtenerMatricula(){
         System.out.println("Ingrese la matricula del usuario: ");
-        String matricula = sc.nextLine().trim();
-        if (matricula.isEmpty() || !matricula.matches("\\d{8}[0-9kK]\\d{2}")) {
+        String matricula = sc.nextLine().trim().toLowerCase();
+        if (matricula.isEmpty() || !matricula.matches("\\d{8}[0-9k]\\d{2}")) {
             throw new IllegalArgumentException("Por favor ingrese una matricula valida (ej: 12345678k02)");
         }
         return matricula;
@@ -285,7 +283,7 @@ public class MenuAdmin {
         try{
         String matricula = obtenerMatricula();
         gestoradmin.eliminarUsuario(matricula);
-            System.out.println("Usuario eliminado correctamente");
+        System.out.println("Usuario eliminado correctamente junto con su reserva");
         } catch (IllegalArgumentException e){
             System.out.println("Error: "+e.getMessage());
         }

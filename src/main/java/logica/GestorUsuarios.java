@@ -26,17 +26,24 @@ public class GestorUsuarios {
         return null;
     }
     public Usuario buscarUsuario(String matricula){
+        String matriculaNormalizada = matricula.trim();
         for (Usuario u : listaUsuarios) {
-            if (u.getMatricula().equals(matricula)) {
+            if (u.getMatricula().equals(matriculaNormalizada)) {
                 return u;
             }
         }
         throw new IllegalArgumentException("No se ha encontrado el usuario en el sistema.");
     }
+
     public ArrayList<Usuario> getListaUsuarios() {
         return listaUsuarios;
     }
-
+    public void agregarUsuario(Usuario usuario) {
+        listaUsuarios.add(usuario);
+    }
+    public void eliminarUsuario(Usuario usuario) {
+        listaUsuarios.remove(usuario);
+    }
     public boolean usuarioEsAdmin(Usuario usuario){
         return usuario.getUfromail().endsWith("@ufroadmin.cl");
 
