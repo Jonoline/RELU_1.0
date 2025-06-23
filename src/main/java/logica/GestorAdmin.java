@@ -6,16 +6,17 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class GestorAdmin {
-    private final GestorUsuarios gestorUsuarios = new GestorUsuarios();
+    private final GestorUsuarios gestorUsuarios;
     private final GestorReservas gestorReservas ;
     private final ArrayList<Reserva> reservas;
     private final Json json = new Json();
 
 
 
-    public GestorAdmin() {
+    public GestorAdmin(GestorUsuarios gestorUsuarios) {
         this.reservas = new Json().cargarReservas();
         this.gestorReservas = new GestorReservas();
+        this.gestorUsuarios = gestorUsuarios;
     }
 
 
@@ -61,8 +62,8 @@ public class GestorAdmin {
         // Crear y agregar el nuevo usuario
         Usuario nuevoUsuario = new Usuario(ufromail, matricula, contrasena);
         usuarios.add(nuevoUsuario);
-        gestorUsuarios.agregarUsuario(nuevoUsuario);
         json.ingresarUsuarios(usuarios);
+        gestorUsuarios.setListaUsuarios(usuarios);
     }
     private void verificacionesUsuario(ArrayList<Usuario> usuarios, String matricula, String ufromail, String contrasena){
         // Validar que la matrícula no exista

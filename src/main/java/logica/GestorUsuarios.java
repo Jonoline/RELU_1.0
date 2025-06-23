@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class GestorUsuarios {
 
-    private final ArrayList<Usuario> listaUsuarios = new ArrayList<>();
+    private ArrayList<Usuario> listaUsuarios = new ArrayList<>();
 
     public GestorUsuarios() {
         Json json = new Json();
@@ -37,6 +37,9 @@ public class GestorUsuarios {
 
     public ArrayList<Usuario> getListaUsuarios() {
         return listaUsuarios;
+    }
+    public void setListaUsuarios(ArrayList<Usuario> listaUsuarios) {
+        this.listaUsuarios = listaUsuarios;
     }
     public void agregarUsuario(Usuario usuario) {
         listaUsuarios.add(usuario);

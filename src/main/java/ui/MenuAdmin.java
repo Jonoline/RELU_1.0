@@ -12,13 +12,14 @@ public class MenuAdmin {
     private final GestorReservas gestorReservas;
     private final GestorLogias gestorLogias = new GestorLogias();
     private final GestorAdmin gestoradmin;
-    private final GestorUsuarios gestorUsuarios = new GestorUsuarios();
+    private final GestorUsuarios gestorUsuarios;
     private final Json json = new Json();
 
 
-    public MenuAdmin(Usuario usuarioLogueado) {
+    public MenuAdmin(Usuario usuarioLogueado, GestorUsuarios gestorUsuarios) {
         this.gestorReservas = new GestorReservas(usuarioLogueado);
-        this.gestoradmin = new GestorAdmin();
+        this.gestoradmin = new GestorAdmin(gestorUsuarios);
+        this.gestorUsuarios = gestorUsuarios;
     }
 
     public void iniciar() {
