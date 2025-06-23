@@ -90,11 +90,11 @@ public class InicioSesion {
 
         if (gestorUsuarios.usuarioEsAdmin(intento)) {
             System.out.println("Bienvenido administrador RELU");
-            new MenuAdmin(intento,gestorUsuarios).iniciar();
+            GestorReservas gestorReservas = new GestorReservas(intento);
+            new MenuAdmin(intento, gestorUsuarios, gestorReservas).iniciar();
             return;
         }
 
         new Menu(intento).iniciar();
     }
 }
-

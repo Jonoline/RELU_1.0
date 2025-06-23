@@ -51,15 +51,14 @@ public class GestorReservas {
         // si no lo pilla es null por lo tanto NO tiene reserva y devuelve verdadero, si lo pilla FALSO
         return buscarReserva(usuario.getMatricula()) == null;
     }
-    public Boolean CancelarReserva(){
-        if (!verificarUsuarioNoTengaReserva()){
-            reservas.remove(reservaUsuario);
+    public Boolean CancelarReserva(Usuario usuario) {
+        Reserva reservaAEliminar = buscarReserva(usuario.getMatricula());
+        if (reservaAEliminar != null) {
+            reservas.remove(reservaAEliminar);
             json.IngresarReservas(reservas);
-            this.reservaUsuario = buscarReserva(usuario.getMatricula());
             return true;
-        }else {
-            return false;
         }
+        return false;
     }
     private void limpiezaReservasAntiguas(){
         int length = reservas.size();
@@ -130,5 +129,17 @@ public class GestorReservas {
         }
 
         return verificarLogiaEnFecha(logia, fechaPropuesta);
+    }
+    public void agregarReservaAdmin(Usuario usuarioParaReservar, Logia logia, LocalDateTime fechaHora) {
+        if (buscarReserva(usuarioParaReservar.getMatricula()) != null) {
+            throw new IllegalArgumentException("El usuario ya tiene una reserva activa.");
+        }
+
+        if (!verificarLogiaEnFecha(logia, fechaHora)) {
+            throw new IllegalArgumentException("La logia no está disponible en ese horario.");
+        }
+
+        reservas.add(new Reserva(usuarioParaReservar.getMatricula(), logia, fechaHora));
+        json.IngresarReservas(reservas);
     }
 }

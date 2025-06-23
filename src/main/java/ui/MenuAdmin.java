@@ -6,6 +6,10 @@ import logica.*;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import logica.GestorAdmin;
+import logica.GestorLogias;
+import logica.GestorReservas;
+import logica.GestorUsuarios;
 
 public class MenuAdmin {
     private final Scanner sc = new Scanner(System.in);
@@ -16,10 +20,10 @@ public class MenuAdmin {
     private final Json json = new Json();
 
 
-    public MenuAdmin(Usuario usuarioLogueado, GestorUsuarios gestorUsuarios) {
-        this.gestorReservas = new GestorReservas(usuarioLogueado);
-        this.gestoradmin = new GestorAdmin(gestorUsuarios);
+    public MenuAdmin(Usuario usuarioLogueado, GestorUsuarios gestorUsuarios, GestorReservas gestorReservas) {
         this.gestorUsuarios = gestorUsuarios;
+        this.gestorReservas = gestorReservas;
+        this.gestoradmin = new GestorAdmin(gestorUsuarios, gestorReservas, gestorLogias);
     }
 
     public void iniciar() {
@@ -112,25 +116,26 @@ public class MenuAdmin {
     }
 
 
-    private void manejarAgendarLogia(){
-        try{
-            String matricula = obtenerMatricula();
-            if (gestoradmin.buscarReserva(matricula) != null) {
-                throw new IllegalArgumentException("El usuario ya tiene una reserva activa");
-            }
-            Usuario usuario = gestorUsuarios.buscarUsuario(matricula);
-            int dia = obtenerDia();
-            String mes = obtenerMes();
-            Logia logia = obtenerLogia();
-            Integer[] horasYminutos = formarHorasYminutos(obtenerHora(logia,dia,mes));
-            gestoradmin.agregarReserva(usuario,logia,FormarFecha(dia,mes,horasYminutos));
-            System.out.println("Reserva realizada con éxito");
-        } catch (IllegalArgumentException e){
-            System.out.println("Error: "+e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Error inesperado");
+    private void manejarAgendarLogia() {
+    try {
+        String matricula = obtenerMatricula();
+        Usuario usuario = gestorUsuarios.buscarUsuario(matricula);
+        if (usuario == null) {
+            throw new IllegalArgumentException("Usuario no encontrado");
         }
+        
+        Logia logia = obtenerLogia();
+        int dia = obtenerDia();
+        String mes = obtenerMes();
+        Integer[] horasYminutos = formarHorasYminutos(obtenerHora(logia, dia, mes));
+        LocalDateTime fecha = FormarFecha(dia, mes, horasYminutos);
+        
+        gestoradmin.agregarReservaParaUsuario(usuario, logia, fecha);
+        System.out.println("Reserva realizada con éxito");
+    } catch (IllegalArgumentException e) {
+        System.out.println("Error: " + e.getMessage());
     }
+}
 
 
     private String obtenerMes() {
@@ -267,18 +272,38 @@ public class MenuAdmin {
         return contra;
     }
 
+private Rol obtenerRolUsuario() {
+    System.out.println("Seleccione el rol del usuario:");
+    System.out.println("[1] Estudiante");
+    System.out.println("[2] Profesor");
+    System.out.println("[3] Administrador");
+    
+    try {
+        int opcion = Integer.parseInt(sc.nextLine().trim());
+        return switch (opcion) {
+            case 1 -> Rol.ESTUDIANTE;
+            case 2 -> Rol.PROFESOR;
+            case 3 -> Rol.ADMINISTRADOR;
+            default -> throw new IllegalArgumentException("Opción de rol inválida");
+        };
+    } catch (NumberFormatException e) {
+        throw new IllegalArgumentException("Por favor ingrese un número válido");
+    }
+}
 
-    private void manejarAgregarUsuario(){
-        try{
+private void manejarAgregarUsuario() {
+    try {
         String matricula = obtenerMatricula();
         String correo = obtenerCorreo();
         String contrasenia = obtenerContrasenia();
-        gestoradmin.agregarUsuario(matricula, correo, contrasenia);
-            System.out.println("Usuario agregado correctamente");
-        } catch (IllegalArgumentException e){
-            System.out.println("Error: "+e.getMessage());
-        }
+        Rol rol = obtenerRolUsuario();
+        
+        gestoradmin.agregarUsuario(matricula, correo, contrasenia, rol);
+        System.out.println("Usuario agregado correctamente");
+    } catch (IllegalArgumentException e) {
+        System.out.println("Error: " + e.getMessage());
     }
+}
 
     private void manejarEliminarUsuario(){
         try{

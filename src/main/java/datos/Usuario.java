@@ -6,16 +6,20 @@ public class Usuario {
     private final String matricula;
     private final String ufromail;
     private final String contrasena;
+    private final Rol rol;
 
-    public Usuario(String ufromail, String matricula, String contrasena) {
+    public Usuario(String ufromail, String matricula, String contrasena, Rol rol) {
         this.ufromail = ufromail;
         this.matricula = matricula;
         this.contrasena = contrasena;
+        this.rol = rol;
     }
+
     public Usuario(String matricula, String contrasena) {
         this.ufromail = "";
         this.matricula = matricula;
         this.contrasena = contrasena;
+        this.rol = Rol.ESTUDIANTE; // Por defecto es estudiante
     }
 
     public String getUfromail() {
@@ -30,11 +34,16 @@ public class Usuario {
         return contrasena;
     }
 
+    public Rol getRol() {
+        return rol;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Usuario usuario = (Usuario) o;
-        return Objects.equals(matricula, usuario.matricula) && Objects.equals(contrasena, usuario.contrasena);
+        return Objects.equals(matricula, usuario.matricula) && 
+               Objects.equals(contrasena, usuario.contrasena);
     }
 
     @Override
@@ -42,4 +51,3 @@ public class Usuario {
         return Objects.hash(matricula, contrasena);
     }
 }
-
