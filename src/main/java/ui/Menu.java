@@ -96,7 +96,7 @@ public class Menu {
         System.out.println("Ingrese el [ID] de la logia: ");
         String id = sc.nextLine().toUpperCase().trim();
         Logia logia = gestorLogias.obtenerLogia(id);
-        verificarLogia(logia, id);
+        gestorLogias.verificarLogia(logia, id);
         return logia;
     }
 
@@ -202,14 +202,4 @@ public class Menu {
         delay(1000);
     }
 
-    private void verificarLogia(Logia logia, String id){
-        if (logia == null) {
-            throw new IllegalArgumentException("La logia con ID " + id + " no existe");
-        }
-        // Verificar si la logia está habilitada
-        if (!logia.getHabilitada()) {
-            throw new IllegalArgumentException("La logia " + id + " no está habilitada actualmente");
-        }
-
-    }
 }

@@ -43,6 +43,17 @@ public class GestorLogias {
         return "L" + (maxId + 1);
     }
 
+    public void verificarLogia(Logia logia, String id){
+        if (logia == null) {
+            throw new IllegalArgumentException("La logia con ID " + id + " no existe");
+        }
+        // Verificar si la logia está habilitada
+        if (!logia.getHabilitada()) {
+            throw new IllegalArgumentException("La logia " + id + " no está habilitada actualmente");
+        }
+    }
+
+
     public void agregarLogiaADMIN( int capacidad, String piso) throws IllegalArgumentException {
         // Verificar valores válidos
         if (capacidad <= 0) {
@@ -79,6 +90,7 @@ public class GestorLogias {
         logia.setHabilitada(true);
         json.ingresarLogias(logias);
     }
+
     public ArrayList<Logia> obtenerTodasLasLogias() {
         return new ArrayList<>(logias);
     }

@@ -107,7 +107,7 @@ public class MenuAdmin {
         System.out.println("Ingrese el [ID] de la logia: ");
         String id = sc.nextLine().toUpperCase().trim();
         Logia logia = gestorLogias.obtenerLogia(id);
-        verificarLogia(logia, id);
+        gestorLogias.verificarLogia(logia, id);
         return logia;
     }
 
@@ -153,7 +153,7 @@ public class MenuAdmin {
 
 
     private String obtenerHora(Logia logia, int dia, String mes){
-        System.out.println("🕒 Bloques horarios disponibles:");
+        System.out.println("🕒 Bloques horarios disponibles: ");
         ArrayList<Horario> bloquesDisponibles = gestorReservas.obtenerBloquesDisponibles(logia, dia, mes);
         if (bloquesDisponibles.isEmpty()) {
             throw new IllegalArgumentException("No hay bloques horarios disponibles para esta logia en la fecha seleccionada");
@@ -223,18 +223,6 @@ public class MenuAdmin {
 
     public void delay(){
         delay(1000);
-    }
-
-
-    private void verificarLogia(Logia logia, String id){
-        if (logia == null) {
-            throw new IllegalArgumentException("La logia con ID " + id + " no existe");
-        }
-        // Verificar si la logia está habilitada
-        if (!logia.getHabilitada()) {
-            throw new IllegalArgumentException("La logia " + id + " no está habilitada actualmente");
-        }
-
     }
 
 
@@ -324,6 +312,8 @@ public class MenuAdmin {
             System.out.println("Error: " + e.getMessage());
         }
     }
+
+
     private String obtenerIdLogia() {
         System.out.println("Ingrese el ID de la logia (ejemplo: L1): ");
         String id = sc.nextLine().trim().toUpperCase();
@@ -332,6 +322,7 @@ public class MenuAdmin {
         }
         return id;
     }
+
 
     private void manejarHabilitarDeshabilitarLogias() {
         try {
@@ -346,8 +337,8 @@ public class MenuAdmin {
             if (logia == null) {
                 throw new IllegalArgumentException("No existe una logia con el ID: " + id);
             }
-            printsmanejologia(id, logia);
-            switchmanejologia(obtenerOpcion(), id, logia);
+            printsManejoLogia(id, logia);
+            switchManejoLogia(obtenerOpcion(), id, logia);
         } catch (NumberFormatException e) {
             System.out.println("Error: Por favor ingrese un número válido");
         } catch (IllegalArgumentException e) {
@@ -355,7 +346,8 @@ public class MenuAdmin {
         }
     }
 
-    private void printsmanejologia(String id, Logia logia ){
+
+    private void printsManejoLogia(String id, Logia logia ){
         System.out.println("Estado actual de la logia " + id + ": " +
                 (logia.getHabilitada() ? "Habilitada" : "Deshabilitada"));
         System.out.println("\n¿Qué desea hacer?");
@@ -364,7 +356,8 @@ public class MenuAdmin {
         System.out.print("Opción: ");
     }
 
-    private void switchmanejologia(int opcion, String id, Logia logia){
+
+    private void switchManejoLogia(int opcion, String id, Logia logia){
         switch (opcion) {
             case 1 -> {
                 if (logia.getHabilitada()) {
