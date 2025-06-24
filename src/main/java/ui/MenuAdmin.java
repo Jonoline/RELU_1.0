@@ -16,8 +16,8 @@ public class MenuAdmin {
     private final Json json = new Json();
 
 
-    public MenuAdmin(Usuario usuarioLogueado, GestorUsuarios gestorUsuarios) {
-        this.gestorReservas = new GestorReservas(usuarioLogueado);
+    public MenuAdmin(GestorUsuarios gestorUsuarios) {
+        this.gestorReservas = new GestorReservas();
         this.gestoradmin = new GestorAdmin(gestorUsuarios);
         this.gestorUsuarios = gestorUsuarios;
     }
@@ -113,17 +113,19 @@ public class MenuAdmin {
 
 
     private void manejarAgendarLogia(){
+        JavaTimeUtils timeUtils = new JavaTimeUtils();
         try{
             String matricula = obtenerMatricula();
+            Usuario usuario = gestorUsuarios.buscarUsuario(matricula);
             if (gestoradmin.buscarReserva(matricula) != null) {
                 throw new IllegalArgumentException("El usuario ya tiene una reserva activa");
             }
-            Usuario usuario = gestorUsuarios.buscarUsuario(matricula);
-            int dia = obtenerDia();
             String mes = obtenerMes();
+            int dia = obtenerDia();
             Logia logia = obtenerLogia();
-            Integer[] horasYminutos = formarHorasYminutos(obtenerHora(logia,dia,mes));
-            gestoradmin.agregarReserva(usuario,logia,FormarFecha(dia,mes,horasYminutos));
+            Integer[] horasYminutos = timeUtils.formarHorasYminutos(obtenerHora(logia, dia, mes));
+            LocalDateTime fecha = timeUtils.FormarFecha(dia,mes,horasYminutos);
+            gestoradmin.agregarReservaParaUsuario(usuario,logia,fecha);
             System.out.println("Reserva realizada con éxito");
         } catch (IllegalArgumentException e){
             System.out.println("Error: "+e.getMessage());
@@ -173,25 +175,6 @@ public class MenuAdmin {
             throw new IllegalArgumentException("Ingrese un número válido");
         }
     }
-
-
-    private Integer[] formarHorasYminutos(String horaInicio){
-        Integer[] partes = new Integer[2];
-        String[] partesHora = horaInicio.split(":");
-        partes[0] = Integer.parseInt(partesHora[0]);
-        partes[1] = Integer.parseInt(partesHora[1]);
-        return partes;
-    }
-
-
-    private LocalDateTime FormarFecha(int dia, String mes, Integer[] horasYminutos){
-        LocalDateTime fecha = LocalDateTime.of(LocalDateTime.now().getYear(), Integer.parseInt(mes), dia, horasYminutos[0],horasYminutos[1]);
-        if (fecha.isBefore(LocalDateTime.now())){
-            throw new IllegalArgumentException("La fecha seleccionada no puede ser anterior a la fecha actual");
-        }
-        return fecha;
-    }
-
 
     private void cancelarReserva() {
         Usuario usuario = gestorUsuarios.buscarUsuario(obtenerMatricula());
@@ -261,7 +244,8 @@ public class MenuAdmin {
         String matricula = obtenerMatricula();
         String correo = obtenerCorreo();
         String contrasenia = obtenerContrasenia();
-        gestoradmin.agregarUsuario(matricula, correo, contrasenia);
+        Rol rol = obtenerRolUsuario();
+        gestoradmin.agregarUsuario(matricula, correo, contrasenia, rol);
             System.out.println("Usuario agregado correctamente");
         } catch (IllegalArgumentException e){
             System.out.println("Error: "+e.getMessage());
@@ -376,6 +360,23 @@ public class MenuAdmin {
                 }
             }
             default -> throw new IllegalArgumentException("Opción inválida");
+        }
+    }
+    private Rol obtenerRolUsuario() {
+        System.out.println("Seleccione el rol del usuario:");
+        System.out.println("[1] Estudiante");
+        System.out.println("[2] Profesor");
+        System.out.println("[3] Administrador");
+        try {
+            int opcion = obtenerOpcion();
+            return switch (opcion) {
+                case 1 -> Rol.ESTUDIANTE;
+                case 2 -> Rol.PROFESOR;
+                case 3 -> Rol.ADMINISTRADOR;
+                default -> throw new IllegalArgumentException("Opción de rol inválida");
+            };
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Por favor ingrese un número válido");
         }
     }
 }

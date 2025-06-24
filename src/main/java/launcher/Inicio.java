@@ -9,7 +9,7 @@ public class Inicio {
             inicioSesion.menu();
         } catch (Exception e) {
             System.err.println("Error al iniciar el programa: " + e.getMessage());
-            e.printStackTrace();
+
         }
     }
 }

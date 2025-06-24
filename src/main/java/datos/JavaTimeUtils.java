@@ -53,4 +53,22 @@ public class JavaTimeUtils {
                 .setPrettyPrinting()
                 .create();
     }
+
+
+    public Integer[] formarHorasYminutos(String horaInicio){
+        Integer[] partes = new Integer[2];
+        String[] partesHora = horaInicio.split(":");
+        partes[0] = Integer.parseInt(partesHora[0]);
+        partes[1] = Integer.parseInt(partesHora[1]);
+        return partes;
+    }
+
+
+    public LocalDateTime FormarFecha(int dia, String mes, Integer[] horasYminutos){
+        LocalDateTime fecha = LocalDateTime.of(LocalDateTime.now().getYear(), Integer.parseInt(mes), dia, horasYminutos[0],horasYminutos[1]);
+        if (fecha.isBefore(LocalDateTime.now())){
+            throw new IllegalArgumentException("La fecha seleccionada no puede ser anterior a la fecha actual");
+        }
+        return fecha;
+    }
 }

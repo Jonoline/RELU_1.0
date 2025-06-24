@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import datos.*;
 import logica.GestorLogias;
 import logica.GestorReservas;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -13,10 +12,12 @@ public class Menu {
     private final GestorReservas gestorReservas;
     private final GestorLogias gestorLogias = new GestorLogias();
     private final Json json = new Json();
+    private final Usuario usuarioLoqueado;
 
 
     public Menu(Usuario usuarioLogueado) {
         this.gestorReservas = new GestorReservas(usuarioLogueado);
+        this.usuarioLoqueado = usuarioLogueado;
     }
 
     public void iniciar() {
@@ -101,17 +102,19 @@ public class Menu {
     }
 
     private void manejarAgendarLogia(){
+        JavaTimeUtils timeUtils = new JavaTimeUtils();
         if (gestorReservas.getReservaUsuario() != null) {
             System.out.println("Usted ya tiene una reserva activa, si desea realizar otra debe cancelar la actual.");
             return;
         }
 
         try{
-            int dia = obtenerDia();
             String mes = obtenerMes();
+            int dia = obtenerDia();
             Logia logia = obtenerLogia();
-            Integer[] horasYminutos = formarHorasYminutos(obtenerHora(logia,dia,mes));
-            gestorReservas.agregarReserva(logia,FormarFecha(dia,mes,horasYminutos));
+            Integer[] horasYminutos = timeUtils.formarHorasYminutos(obtenerHora(logia, dia, mes));
+            LocalDateTime fecha = timeUtils.FormarFecha(dia,mes,horasYminutos);
+            gestorReservas.agregarReserva(usuarioLoqueado,logia,fecha);
             System.out.println("Reserva realizada con éxito");
             } catch (IllegalArgumentException e){
                 System.out.println("Error: "+e.getMessage());
@@ -159,27 +162,11 @@ public class Menu {
         }
     }
 
-    private Integer[] formarHorasYminutos(String horaInicio){
-        Integer[] partes = new Integer[2];
-        String[] partesHora = horaInicio.split(":");
-        partes[0] = Integer.parseInt(partesHora[0]);
-        partes[1] = Integer.parseInt(partesHora[1]);
-        return partes;
-    }
-
-    private LocalDateTime FormarFecha(int dia, String mes, Integer[] horasYminutos){
-        LocalDateTime fecha = LocalDateTime.of(LocalDateTime.now().getYear(), Integer.parseInt(mes), dia, horasYminutos[0],horasYminutos[1]);
-        if (fecha.isBefore(LocalDateTime.now())){
-            throw new IllegalArgumentException("La fecha seleccionada no puede ser anterior a la fecha actual");
-        }
-        return fecha;
-    }
-
     private void cancelarReserva() {
-        if (gestorReservas.CancelarReserva()) {
-            System.out.println("Reserva cancelada");
+        if (gestorReservas.CancelarReserva(usuarioLoqueado)) {
+            System.out.println("Reserva cancelada correctamente");
         } else {
-            System.out.println("Usted no tiene una reserva activa");
+            System.out.println("Usted no tiene una reserva activa para cancelar");
         }
     }
 
@@ -201,5 +188,4 @@ public class Menu {
     public void delay(){
         delay(1000);
     }
-
 }

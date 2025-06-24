@@ -3,6 +3,7 @@ package logica;
 import datos.Json;
 import datos.Usuario;
 import java.util.ArrayList;
+import datos.Rol;
 
 
 
@@ -45,7 +46,7 @@ public class GestorUsuarios {
         listaUsuarios.remove(usuario);
     }
     public boolean usuarioEsAdmin(Usuario usuario){
-        return usuario.getUfromail().endsWith("@ufroadmin.cl");
+        return usuario.getRol() == Rol.ADMINISTRADOR;
 
     }
 }

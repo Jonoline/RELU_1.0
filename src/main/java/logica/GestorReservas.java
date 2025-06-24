@@ -29,15 +29,20 @@ public class GestorReservas {
     }
 
 
-    public void agregarReserva( Logia logia, LocalDateTime fechaHora) throws IllegalArgumentException{
-        if (verificarLogiaEnFecha(logia, fechaHora) && verificarUsuarioNoTengaReserva()){
-            reservas.add(new Reserva(usuario.getMatricula(), logia, fechaHora));
-            json.IngresarReservas(reservas);
-            this.reservaUsuario = buscarReserva(usuario.getMatricula());
-        }else {
-            throw new IllegalArgumentException("Reserva no realizada, ya existe una reserva para esa logia en ese horario");
+    public void agregarReserva(Usuario usuarioAReservar, Logia logia, LocalDateTime fechaHora) throws IllegalArgumentException{
+        if(!verificarUsuarioNoTengaReserva(usuarioAReservar)){
+            throw new IllegalArgumentException("No se puede realizar una reserva para un usuario que no tiene reserva");
         }
+        if (verificarLogiaEnFecha(logia, fechaHora)){
+            throw new IllegalArgumentException("No se puede realizar una reserva para una logia que ya tiene reserva");
+        }
+        reservas.add(new Reserva(usuarioAReservar.getMatricula(), logia, fechaHora));
+        json.IngresarReservas(reservas);
+        this.reservaUsuario = buscarReserva(usuario.getMatricula());
     }
+
+
+
     public Reserva buscarReserva(String matricula){
         for (Reserva r : reservas) {
             if (r.getMatricula().equals(matricula)) {
@@ -47,20 +52,25 @@ public class GestorReservas {
         return null;
     }
 
-    private Boolean verificarUsuarioNoTengaReserva(){
+    private Boolean verificarUsuarioNoTengaReserva(Usuario usuario){
         // si no lo pilla es null por lo tanto NO tiene reserva y devuelve verdadero, si lo pilla FALSO
         return buscarReserva(usuario.getMatricula()) == null;
     }
-    public Boolean CancelarReserva(){
-        if (!verificarUsuarioNoTengaReserva()){
-            reservas.remove(reservaUsuario);
+
+
+
+    public Boolean CancelarReserva(Usuario usuario) {
+        Reserva reservaAEliminar = buscarReserva(usuario.getMatricula());
+        if (reservaAEliminar != null) {
+            reservas.remove(reservaAEliminar);
             json.IngresarReservas(reservas);
             this.reservaUsuario = buscarReserva(usuario.getMatricula());
             return true;
-        }else {
-            return false;
         }
+        return false;
     }
+
+
     private void limpiezaReservasAntiguas(){
         int length = reservas.size();
         reservas.removeIf(r -> r.getFechaHora().isBefore(LocalDateTime.now())); //es como un for :)

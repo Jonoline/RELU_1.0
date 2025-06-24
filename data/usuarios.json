@@ -2,26 +2,31 @@
   {
     "matricula": "21697810223",
     "ufromail": "j.chavez12@ufromail.cl",
-    "contrasena": "123"
+    "contrasena": "123",
+    "rol": "ESTUDIANTE"
   },
   {
     "matricula": "21797495k23",
-    "ufromail": "ayuda",
-    "contrasena": "123"
+    "ufromail": "c.ramos07@ufromail.cl",
+    "contrasena": "123",
+    "rol": "ESTUDIANTE"
   },
   {
     "matricula": "21437088323",
-    "ufromail": "por",
-    "contrasena": "123"
+    "ufromail": "j.arriagada13@ufromail.cl",
+    "contrasena": "123",
+    "rol": "ESTUDIANTE"
   },
   {
     "matricula": "21717876223",
-    "ufromail": "favor",
-    "contrasena": "123"
+    "ufromail": "e.aguilera04@ufromail.cl",
+    "contrasena": "123",
+    "rol": "ESTUDIANTE"
   },
   {
     "matricula": "12345678k25",
     "ufromail": "soyadmin@ufroadmin.cl",
-    "contrasena": "123"
+    "contrasena": "123",
+    "rol": "ADMINISTRADOR"
   }
 ]
