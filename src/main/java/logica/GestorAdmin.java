@@ -12,8 +12,8 @@ public class GestorAdmin {
 
 
 
-    public GestorAdmin(GestorUsuarios gestorUsuarios) {
-        this.gestorReservas = new GestorReservas();
+    public GestorAdmin(Usuario usuario, GestorUsuarios gestorUsuarios) {
+        this.gestorReservas = new GestorReservas(usuario);
         this.gestorUsuarios = gestorUsuarios;
     }
 
@@ -82,7 +82,9 @@ public class GestorAdmin {
         gestorUsuarios.eliminarUsuario(usuario);
         json.ingresarUsuarios(usuarios);
     }
-
+    public ArrayList<Horario> obtenerBloquesDisponibles(Logia logia, int dia, String mes) {
+        return gestorReservas.obtenerBloquesDisponibles(logia, dia, mes);
+    }
 
 
 

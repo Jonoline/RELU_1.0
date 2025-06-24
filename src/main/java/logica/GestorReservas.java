@@ -17,13 +17,6 @@ public class GestorReservas {
         this.reservaUsuario = buscarReserva(usuarioLogueado.getMatricula());
     }
 
-    public GestorReservas() {
-        reservas = new Json().cargarReservas();
-        limpiezaReservasAntiguas();
-        this.usuario = null;
-        this.reservaUsuario = null;
-    }
-
     public Reserva getReservaUsuario() {
         return reservaUsuario;
     }

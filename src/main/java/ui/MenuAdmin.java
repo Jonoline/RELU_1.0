@@ -9,16 +9,14 @@ import java.util.Scanner;
 
 public class MenuAdmin {
     private final Scanner sc = new Scanner(System.in);
-    private final GestorReservas gestorReservas;
     private final GestorLogias gestorLogias = new GestorLogias();
     private final GestorAdmin gestoradmin;
     private final GestorUsuarios gestorUsuarios;
     private final Json json = new Json();
 
 
-    public MenuAdmin(GestorUsuarios gestorUsuarios) {
-        this.gestorReservas = new GestorReservas();
-        this.gestoradmin = new GestorAdmin(gestorUsuarios);
+    public MenuAdmin(Usuario usuario, GestorUsuarios gestorUsuarios) {
+        this.gestoradmin = new GestorAdmin(usuario, gestorUsuarios);
         this.gestorUsuarios = gestorUsuarios;
     }
 
@@ -156,7 +154,7 @@ public class MenuAdmin {
 
     private String obtenerHora(Logia logia, int dia, String mes){
         System.out.println("🕒 Bloques horarios disponibles: ");
-        ArrayList<Horario> bloquesDisponibles = gestorReservas.obtenerBloquesDisponibles(logia, dia, mes);
+        ArrayList<Horario> bloquesDisponibles = gestoradmin.obtenerBloquesDisponibles(logia, dia, mes);
         if (bloquesDisponibles.isEmpty()) {
             throw new IllegalArgumentException("No hay bloques horarios disponibles para esta logia en la fecha seleccionada");
         }
