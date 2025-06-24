@@ -25,8 +25,14 @@
   },
   {
     "matricula": "12345678k25",
-    "ufromail": "soyadmin@ufroadmin.cl",
+    "ufromail": "soyadmin@ufrontera.cl",
     "contrasena": "123",
     "rol": "ADMINISTRADOR"
+  },
+  {
+    "matricula": "87654321k25",
+    "ufromail": "soyprofe@ufrontera.cl",
+    "contrasena": "123",
+    "rol": "PROFESOR"
   }
 ]
