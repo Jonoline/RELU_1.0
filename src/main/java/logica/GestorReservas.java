@@ -33,7 +33,7 @@ public class GestorReservas {
         if(!verificarUsuarioNoTengaReserva(usuarioAReservar)){
             throw new IllegalArgumentException("No se puede realizar una reserva para un usuario que no tiene reserva");
         }
-        if (verificarLogiaEnFecha(logia, fechaHora)){
+        if (!verificarLogiaEnFecha(logia, fechaHora)){
             throw new IllegalArgumentException("No se puede realizar una reserva para una logia que ya tiene reserva");
         }
         reservas.add(new Reserva(usuarioAReservar.getMatricula(), logia, fechaHora));
