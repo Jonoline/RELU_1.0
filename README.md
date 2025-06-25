@@ -1,4 +1,5 @@
 # RELU
+(código avance 2 trabajado en rama develop_Poo)
 Aplicación destinada a estudiante, docentes y funcionarios de la Universidad de la Frontera. La cual consiste en una aplicación que modificará el sistema actual en la gestión de reserva de Logias de la Universidad de la Frontera..
 
 Dentro de la rama Develop se encuentra el código para el avance 1, este código se debe inicializar desde menu.java. (las matrículas válidas son las de los 4 integrantes del proyecto)
