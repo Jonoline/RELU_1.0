@@ -694,7 +694,7 @@ public class ViewMenuAdmin extends JFrame {
         }
     }
 
-    // Método main para pruebas
+    // Metodo main para pruebas
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             try {
