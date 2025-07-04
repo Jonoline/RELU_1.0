@@ -7,6 +7,7 @@ import com.toedter.calendar.JCalendar;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -362,14 +363,32 @@ public class ViewMenuAdmin extends JFrame {
         JTextField txtMatricula = new JTextField(20);
         JComboBox<String> comboLogias = new JComboBox<>();
         JCalendar calendario = new JCalendar();
-        JComboBox<Horario> comboHorarios = new JComboBox<>(Horario.values());
+        JComboBox<Horario> comboHorarios = new JComboBox<>();
 
-        // Cargar logias disponibles
+        // Cargar logias habilitadas
         for (Logia logia : gestorLogias.obtenerTodasLasLogias()) {
             if (logia.getHabilitada()) {
                 comboLogias.addItem(logia.getID());
             }
         }
+
+        // Listener para actualizar horarios disponibles cuando cambie la fecha o la logia
+        PropertyChangeListener actualizarHorarios = evt -> {
+            if (comboLogias.getSelectedItem() != null && calendario.getDate() != null) {
+                actualizarHorariosDisponibles(comboHorarios,
+                        (String)comboLogias.getSelectedItem(),
+                        calendario.getDate());
+            }
+        };
+
+        calendario.addPropertyChangeListener("calendar", actualizarHorarios);
+        comboLogias.addActionListener(e -> {
+            if (calendario.getDate() != null) {
+                actualizarHorariosDisponibles(comboHorarios,
+                        (String)comboLogias.getSelectedItem(),
+                        calendario.getDate());
+            }
+        });
 
         // Agregar componentes
         gbc.gridx = 0; gbc.gridy = 0;
@@ -443,6 +462,33 @@ public class ViewMenuAdmin extends JFrame {
         dialogo.pack();
         dialogo.setLocationRelativeTo(this);
         dialogo.setVisible(true);
+    }
+
+    private void actualizarHorariosDisponibles(JComboBox<Horario> comboHorarios, String idLogia, Date fecha) {
+        comboHorarios.removeAllItems();
+        try {
+            Logia logia = gestorLogias.obtenerLogia(idLogia);
+            if (logia != null) {
+                LocalDateTime fechaLocal = fecha.toInstant()
+                        .atZone(ZoneId.systemDefault())
+                        .toLocalDateTime();
+
+                ArrayList<Horario> horariosDisponibles = gestorAdmin.obtenerBloquesDisponibles(
+                        logia,
+                        fechaLocal.getDayOfMonth(),
+                        String.format("%02d", fechaLocal.getMonthValue())
+                );
+
+                for (Horario horario : horariosDisponibles) {
+                    comboHorarios.addItem(horario);
+                }
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private void eliminarReservaSeleccionada() {
