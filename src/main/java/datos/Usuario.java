@@ -30,6 +30,8 @@ public class Usuario {
         return rol;
     }
 
+    public String getUfromail() {return ufromail;}
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
