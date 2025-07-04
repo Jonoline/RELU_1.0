@@ -124,9 +124,9 @@ public class ViewInicioSesion extends JFrame {
         this.setVisible(false);
 
         if (gestorUsuarios.usuarioEsAdmin(usuarioValidado)) {
-            new MenuAdmin(usuarioValidado, gestorUsuarios).iniciar();
+            new ViewMenuAdmin(usuarioValidado,gestorUsuarios).setVisible(true);
         } else {
-            new Menu(usuarioValidado).iniciar();
+            new ViewMenu( usuarioValidado).setVisible(true);
         }
 
         this.dispose();
@@ -138,11 +138,4 @@ public class ViewInicioSesion extends JFrame {
         textMatricula.requestFocus(); // Opcional: Devuelve el foco al campo de matrícula
     }
 
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            ViewInicioSesion view = new ViewInicioSesion();
-            view.setVisible(true);
-        });
-    }
 }

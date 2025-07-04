@@ -49,7 +49,7 @@ public class ViewMenuAdmin extends JFrame {
     }
 
     private void configurarVentana() {
-        setTitle("RELU - Panel de Administración - Usuario: " + usuario.getMatricula());
+        setTitle("RELU - Panel de Administración ");
         setSize(1000, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -68,9 +68,9 @@ public class ViewMenuAdmin extends JFrame {
         panelLogias = crearPanelLogias();
 
         // Agregar paneles al TabbedPane
-        tabbedPane.addTab("Usuarios", new ImageIcon("icons/users.png"), panelUsuarios);
-        tabbedPane.addTab("Reservas", new ImageIcon("icons/calendar.png"), panelReservas);
-        tabbedPane.addTab("Logias", new ImageIcon("icons/building.png"), panelLogias);
+        tabbedPane.addTab("Usuarios", redimensionarIcono("icons/usuarios.png", 24, 24), panelUsuarios);
+        tabbedPane.addTab("Reservas", redimensionarIcono("icons/reservas.png", 24, 24), panelReservas);
+        tabbedPane.addTab("Logias", redimensionarIcono("icons/logia.png", 24, 24), panelLogias);
 
         // Menú superior
         JMenuBar menuBar = crearMenuBar();
@@ -78,6 +78,13 @@ public class ViewMenuAdmin extends JFrame {
 
         // Agregar TabbedPane al frame
         add(tabbedPane);
+    }
+
+    public ImageIcon redimensionarIcono(String ruta, int ancho, int alto) {
+        ImageIcon iconoOriginal = new ImageIcon(ruta);
+        Image imagenOriginal = iconoOriginal.getImage();
+        Image imagenEscalada = imagenOriginal.getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+        return new ImageIcon(imagenEscalada);
     }
 
     private void inicializarModelosTablas() {
@@ -434,7 +441,9 @@ public class ViewMenuAdmin extends JFrame {
                         .atZone(ZoneId.systemDefault())
                         .toLocalDateTime()
                         .withHour(Integer.parseInt(horario.getHoraInicio().split(":")[0]))
-                        .withMinute(Integer.parseInt(horario.getHoraInicio().split(":")[1]));
+                        .withMinute(Integer.parseInt(horario.getHoraInicio().split(":")[1]))
+                        .withSecond(0)
+                        .withNano(0);
 
                 gestorAdmin.agregarReservaParaUsuario(usuario, logia, fechaHora);
                 cargarDatos();
@@ -535,7 +544,7 @@ public class ViewMenuAdmin extends JFrame {
                 Reserva reserva = gestorAdmin.buscarReserva(matricula.trim());
                 if (reserva != null) {
                     JOptionPane.showMessageDialog(this,
-                            "Reserva encontrada:\n" + reserva.toString(),
+                            "Reserva encontrada:\n" + reserva,
                             "Información de Reserva",
                             JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -738,24 +747,5 @@ public class ViewMenuAdmin extends JFrame {
                     logia.getHabilitada() ? "Habilitada" : "Deshabilitada"
             });
         }
-    }
-
-    // Metodo main para pruebas
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            try {
-                // Configurar el Look and Feel
-                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-                // Crear un usuario administrador de prueba
-                Usuario adminPrueba = new Usuario("soyadmin@ufrontera.cl", "12345678k25", "123", Rol.ADMINISTRADOR);
-                GestorUsuarios gestorUsuarios = new GestorUsuarios();
-
-                ViewMenuAdmin ventana = new ViewMenuAdmin(adminPrueba, gestorUsuarios);
-                ventana.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
     }
 }

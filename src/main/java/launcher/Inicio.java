@@ -1,12 +1,17 @@
 package launcher;
 
-import ui.InicioSesion;
+import ui.ViewInicioSesion;
+
+import javax.swing.*;
 
 public class Inicio {
     public static void main(String[] args) {
         try {
-            InicioSesion inicioSesion = new InicioSesion();
-            inicioSesion.menu();
+            SwingUtilities.invokeLater(() -> {
+                ViewInicioSesion view = new ViewInicioSesion();
+                view.setVisible(true);
+            });
+
         } catch (Exception e) {
             System.err.println("Error al iniciar el programa: " + e.getMessage());
 
