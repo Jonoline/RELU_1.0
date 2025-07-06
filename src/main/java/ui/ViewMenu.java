@@ -51,6 +51,7 @@ public class ViewMenu extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
+        setIconImage(new ImageIcon("icons/relu.png").getImage());
     }
 
     private void inicializarComponentes() {
@@ -181,6 +182,9 @@ public class ViewMenu extends JFrame {
         JCalendar calendario = configurarCalendario();
 
         // Configuración de selectores
+        // genera el selector de las logias, las obtiene todas,
+        //las vuelve un stream() para operar sobre ellas,
+        //obtiene solo las habilitas y las vuelve a transformar en un array
         JComboBox<Logia> comboLogias = new JComboBox<>(
                 gestorLogias.obtenerTodasLasLogias().stream()
                         .filter(Logia::getHabilitada)
@@ -344,8 +348,7 @@ public class ViewMenu extends JFrame {
         }
     }
 
-    private void realizarReserva(JCalendar calendario, JComboBox<Logia> comboLogias,
-                                 JComboBox<Horario> comboHorarios) {
+    private void realizarReserva(JCalendar calendario, JComboBox<Logia> comboLogias, JComboBox<Horario> comboHorarios) {
         Logia logiaSeleccionada = (Logia) comboLogias.getSelectedItem();
         Horario horarioSeleccionado = (Horario) comboHorarios.getSelectedItem();
 

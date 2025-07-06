@@ -54,6 +54,7 @@ public class ViewMenuAdmin extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
+        setIconImage(new ImageIcon("icons/relu.png").getImage());
     }
 
     private void inicializarComponentes() {
@@ -153,8 +154,8 @@ public class ViewMenuAdmin extends JFrame {
 
         // Panel de botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        JButton btnAgregar = crearBoton("Agregar Usuario", "icons/add_user.png");
-        JButton btnEliminar = crearBoton("Eliminar Usuario", "icons/delete_user.png");
+        JButton btnAgregar = crearBoton("Agregar Usuario", "icons/add.png");
+        JButton btnEliminar = crearBoton("Eliminar Usuario", "icons/delete.png");
 
         btnAgregar.addActionListener(e -> mostrarDialogoAgregarUsuario());
         btnEliminar.addActionListener(e -> eliminarUsuarioSeleccionado());
@@ -179,8 +180,8 @@ public class ViewMenuAdmin extends JFrame {
 
         // Panel de botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        JButton btnAgregar = crearBoton("Agregar Reserva", "icons/add_calendar.png");
-        JButton btnEliminar = crearBoton("Eliminar Reserva", "icons/delete_calendar.png");
+        JButton btnAgregar = crearBoton("Agregar Reserva", "icons/add.png");
+        JButton btnEliminar = crearBoton("Eliminar Reserva", "icons/delete.png");
         JButton btnBuscar = crearBoton("Buscar Reserva", "icons/search.png");
 
         btnAgregar.addActionListener(e -> mostrarDialogoAgregarReserva());
@@ -208,8 +209,8 @@ public class ViewMenuAdmin extends JFrame {
 
         // Panel de botones
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        JButton btnAgregar = crearBoton("Agregar Logia", "icons/add_building.png");
-        JButton btnHabilitar = crearBoton("Habilitar/Deshabilitar", "icons/toggle.png");
+        JButton btnAgregar = crearBoton("Agregar Logia", "icons/add.png");
+        JButton btnHabilitar = crearBoton("Habilitar/Deshabilitar", "icons/agregar.png");
 
         btnAgregar.addActionListener(e -> mostrarDialogoAgregarLogia());
         btnHabilitar.addActionListener(e -> mostrarDialogoHabilitarLogia());
@@ -586,6 +587,17 @@ public class ViewMenuAdmin extends JFrame {
         panel.add(comboPiso, gbc);
 
         // Panel de botones
+        JPanel panelBotones = getJPanel(comboCapacidad, comboPiso, dialogo);
+
+        dialogo.add(panel, BorderLayout.CENTER);
+        dialogo.add(panelBotones, BorderLayout.SOUTH);
+
+        dialogo.pack();
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+    }
+
+    private JPanel getJPanel(JComboBox<Integer> comboCapacidad, JComboBox<String> comboPiso, JDialog dialogo) {
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnGuardar = new JButton("Guardar");
         JButton btnCancelar = new JButton("Cancelar");
@@ -614,13 +626,7 @@ public class ViewMenuAdmin extends JFrame {
 
         panelBotones.add(btnGuardar);
         panelBotones.add(btnCancelar);
-
-        dialogo.add(panel, BorderLayout.CENTER);
-        dialogo.add(panelBotones, BorderLayout.SOUTH);
-
-        dialogo.pack();
-        dialogo.setLocationRelativeTo(this);
-        dialogo.setVisible(true);
+        return panelBotones;
     }
 
     private void mostrarDialogoHabilitarLogia() {
@@ -628,18 +634,7 @@ public class ViewMenuAdmin extends JFrame {
         dialogo.setLayout(new BorderLayout(10, 10));
 
         // Crear tabla de logias con sus estados
-        String[] columnas = {"ID", "Capacidad", "Piso", "Estado"};
-        DefaultTableModel modeloTablaLogias = new DefaultTableModel(columnas, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return column == 3; // Solo permite editar la columna de estado
-            }
-
-            @Override
-            public Class<?> getColumnClass(int columnIndex) {
-                return columnIndex == 3 ? Boolean.class : String.class;
-            }
-        };
+        DefaultTableModel modeloTablaLogias = getDefaultTableModel();
 
         JTable tablaLogias = new JTable(modeloTablaLogias);
         tablaLogias.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -655,6 +650,33 @@ public class ViewMenuAdmin extends JFrame {
         }
 
         // Panel de botones
+        JPanel panelBotones = getJPanel(modeloTablaLogias, dialogo);
+
+        dialogo.add(new JScrollPane(tablaLogias), BorderLayout.CENTER);
+        dialogo.add(panelBotones, BorderLayout.SOUTH);
+
+        dialogo.setSize(500, 300);
+        dialogo.setLocationRelativeTo(this);
+        dialogo.setVisible(true);
+    }
+
+    private static DefaultTableModel getDefaultTableModel() {
+        String[] columnas = {"ID", "Capacidad", "Piso", "Estado"};
+        DefaultTableModel modeloTablaLogias = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return column == 3; // Solo permite editar la columna de estado
+            }
+
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                return columnIndex == 3 ? Boolean.class : String.class;
+            }
+        };
+        return modeloTablaLogias;
+    }
+
+    private JPanel getJPanel(DefaultTableModel modeloTablaLogias, JDialog dialogo) {
         JPanel panelBotones = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnGuardar = new JButton("Guardar Cambios");
         JButton btnCancelar = new JButton("Cancelar");
@@ -692,13 +714,7 @@ public class ViewMenuAdmin extends JFrame {
 
         panelBotones.add(btnGuardar);
         panelBotones.add(btnCancelar);
-
-        dialogo.add(new JScrollPane(tablaLogias), BorderLayout.CENTER);
-        dialogo.add(panelBotones, BorderLayout.SOUTH);
-
-        dialogo.setSize(500, 300);
-        dialogo.setLocationRelativeTo(this);
-        dialogo.setVisible(true);
+        return panelBotones;
     }
 
     private void cargarDatos() {
