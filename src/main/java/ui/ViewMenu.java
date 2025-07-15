@@ -181,6 +181,9 @@ public class ViewMenu extends JFrame {
         // Configuración del calendario
         JCalendar calendario = configurarCalendario();
 
+        // Configuración del calendario no cargaba al iniciar asi que se le fuerza actualizar
+        SwingUtilities.updateComponentTreeUI(calendario);
+
         // Configuración de selectores
         // genera el selector de las logias, las obtiene todas,
         //las vuelve un stream() para operar sobre ellas,
@@ -308,7 +311,7 @@ public class ViewMenu extends JFrame {
 
             @Override
             public String getInvalidTooltip() {
-                return "";
+                return "dia no disponible";
             }
         });
 
@@ -412,5 +415,6 @@ public class ViewMenu extends JFrame {
             new ViewInicioSesion().setVisible(true);
         }
     }
+
 
 }

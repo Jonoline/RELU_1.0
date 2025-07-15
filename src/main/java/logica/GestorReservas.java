@@ -129,7 +129,7 @@ public class GestorReservas {
 
     private boolean fechaValida(LocalDateTime fechaPropuesta, Logia logia) {
         if (fechaPropuesta.isBefore(LocalDateTime.now())) {
-            throw new IllegalArgumentException("La fecha seleccionada no puede ser anterior a la fecha actual");
+            return false;
         }
 
         return verificarLogiaEnFecha(logia, fechaPropuesta);

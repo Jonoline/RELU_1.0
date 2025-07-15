@@ -53,6 +53,6 @@ public class Logia {
     }
 
     public String toString() {
-        return "logia " + getID() + " con capacidad: " + getCapacidad() +" en el piso: "+ getPiso();
+        return "logia " + getID() + ", capacidad: " + getCapacidad() +", piso: "+ getPiso();
     }
 }

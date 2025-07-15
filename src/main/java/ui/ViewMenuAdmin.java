@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ViewMenuAdmin extends JFrame {
@@ -370,8 +371,10 @@ public class ViewMenuAdmin extends JFrame {
         // Campos de entrada
         JTextField txtMatricula = new JTextField(20);
         JComboBox<String> comboLogias = new JComboBox<>();
-        JCalendar calendario = new JCalendar();
+        JCalendar calendario = configurarCalendario();
         JComboBox<Horario> comboHorarios = new JComboBox<>();
+
+        SwingUtilities.updateComponentTreeUI(calendario);
 
         // Cargar logias habilitadas
         for (Logia logia : gestorLogias.obtenerTodasLasLogias()) {
@@ -763,5 +766,57 @@ public class ViewMenuAdmin extends JFrame {
                     logia.getHabilitada() ? "Habilitada" : "Deshabilitada"
             });
         }
+    }
+    private JCalendar configurarCalendario() {
+        JCalendar calendario = new JCalendar();
+        calendario.setMinSelectableDate(new Date());
+
+        // Deshabilitar sábados y domingos
+        calendario.getDayChooser().addDateEvaluator(new com.toedter.calendar.IDateEvaluator() {
+            @Override
+            public boolean isSpecial(Date date) {
+                return false;
+            }
+
+            @Override
+            public Color getSpecialForegroundColor() {
+                return null;
+            }
+
+            @Override
+            public Color getSpecialBackroundColor() {
+                return null;
+            }
+
+            @Override
+            public String getSpecialTooltip() {
+                return null;
+            }
+
+            @Override
+            public boolean isInvalid(Date date) {
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(date);
+                int dayOfWeek = cal.get(Calendar.DAY_OF_WEEK);
+                return dayOfWeek == Calendar.SATURDAY || dayOfWeek == Calendar.SUNDAY;
+            }
+
+            @Override
+            public Color getInvalidForegroundColor() {
+                return null;
+            }
+
+            @Override
+            public Color getInvalidBackroundColor() {
+                return null;
+            }
+
+            @Override
+            public String getInvalidTooltip() {
+                return "dia no disponible";
+            }
+        });
+
+        return calendario;
     }
 }
