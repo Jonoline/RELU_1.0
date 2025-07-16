@@ -74,10 +74,6 @@ public class ViewMenuAdmin extends JFrame {
         tabbedPane.addTab("Reservas", redimensionarIcono("icons/reservas.png", 24, 24), panelReservas);
         tabbedPane.addTab("Logias", redimensionarIcono("icons/logia.png", 24, 24), panelLogias);
 
-        // Menú superior
-        JMenuBar menuBar = crearMenuBar();
-        setJMenuBar(menuBar);
-
         // Agregar TabbedPane al frame
         add(tabbedPane);
     }
@@ -116,24 +112,6 @@ public class ViewMenuAdmin extends JFrame {
                 return false;
             }
         };
-    }
-
-    private JMenuBar crearMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-
-        JMenu menuArchivo = new JMenu("Archivo");
-        JMenuItem itemRefrescar = new JMenuItem("Refrescar Datos");
-        JMenuItem itemSalir = new JMenuItem("Cerrar Sesión");
-
-        itemRefrescar.addActionListener(e -> cargarDatos());
-        itemSalir.addActionListener(e -> cerrarSesion());
-
-        menuArchivo.add(itemRefrescar);
-        menuArchivo.addSeparator();
-        menuArchivo.add(itemSalir);
-
-        menuBar.add(menuArchivo);
-        return menuBar;
     }
 
     private void cerrarSesion() {
