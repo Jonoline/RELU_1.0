@@ -1,0 +1,100 @@
+package ui;
+import datos.Json;
+import datos.Usuario;
+import logica.GestorUsuarios;
+
+import java.util.Scanner;
+
+public class InicioSesion {
+    Scanner sc = new Scanner(System.in);
+    private final Json json = new Json();
+    private final GestorUsuarios gestorUsuarios = new GestorUsuarios();
+
+
+    public void menu() {
+        String opcion;
+        do {
+            mostrarOpciones();
+            opcion = obtenerOpcion();
+            ejecutarOpcion(opcion);
+        } while (!opcion.equals("2"));
+    }
+
+    private void mostrarOpciones() {
+        System.out.println("          LOGIN RELU     ");
+        System.out.println("1. Iniciar sesión  ");
+        System.out.println("2. Salir");
+        System.out.println("Ingrese su opción: ");
+
+        // TODO: Mostrar "1. Iniciar sesión", "2. Salir"
+    }
+
+    /**
+     * Ejecuta la opción seleccionada por el usuario.
+     *
+     * @param opcion opción ingresada por el usuario
+     */
+    private void ejecutarOpcion(String opcion) {
+        switch (opcion){
+            case "1"-> {
+                Usuario intento = gestorUsuarios.iniciarSesion(pedirDatosLogin());
+                ejecucionMenuPrincipal(intento);
+                delay();
+            }
+
+            case "2"-> {
+                json.crearBackups();
+                System.out.println("Saliendo del programa...");
+            }
+            default -> System.out.println("ingrese una opción valida");
+        }
+    }
+
+    private String obtenerOpcion(){
+        return sc.nextLine();
+    }
+    public Usuario pedirDatosLogin() {
+        String matricula = obtenerUsuario();
+        String contrasena = obtenerContrasenia();
+
+        return new Usuario(matricula, contrasena); // correo vacío porque no es necesario para login
+    }
+    private void ejecucionMenuPrincipal(Usuario intento){
+        verificacionInicioSesion(intento);
+
+    }
+    private String obtenerUsuario(){
+        System.out.println("Ingrese su usuario: ");
+        return sc.nextLine();
+    }
+    private String obtenerContrasenia(){
+        System.out.println("Ingrese su contraseña: ");
+        return sc.nextLine();
+    }
+    public void delay(int t) {
+        try {
+            Thread.sleep(t);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void delay(){
+        delay(1000);
+    }
+
+    private void verificacionInicioSesion(Usuario intento) {
+        if (intento == null) {
+            System.out.println("No se ha encontrado el usuario en el sistema.");
+            return;
+        }
+
+        if (gestorUsuarios.usuarioEsAdmin(intento)) {
+            System.out.println("Bienvenido administrador RELU");
+            new MenuAdmin(intento, gestorUsuarios).iniciar();
+            return;
+        }
+
+        new Menu(intento).iniciar();
+    }
+}
+
